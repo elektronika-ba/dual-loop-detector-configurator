@@ -1578,7 +1578,6 @@ namespace config1v1
                 case TRXState.Comm_Setting:
                     //tssDeviceState.Text = tssDeviceState.Tag.ToString().Replace("%", "Communicating");
 
-
                     break;
             }
         }
