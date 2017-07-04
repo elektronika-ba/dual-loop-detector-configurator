@@ -31,6 +31,10 @@ namespace config1v1
             Comm_Setting, // device is in uart communication mode, we initiated SET command and now we are working it
         }
 
+        // used during programming (sending data to device)
+        private int commSettingIndex = 0;
+        private string hex2send = "";
+
         private TRXState rxState = TRXState.Running; // running at app startup (we assume)
 
         private class TDeviceStuff
@@ -261,11 +265,8 @@ namespace config1v1
         /**
          * Puts current config packet to screen/form.
          **/
-        public void configPacketToScreen()
+        public void configPacketToScreen(bool onlyDIPsAndOpMode = false)
         {
-            // tmr1 best
-            uctbSamplingSpeed.Value = configPacket.tmr1Best;
-
             // decode operating mode
             byte opmode = (byte)(configPacket.softDIPA & 0b00000011);
             cbOperatingMode.SelectedIndex = opmode;
@@ -297,6 +298,15 @@ namespace config1v1
                     }
                 }
             }
+
+            // if only DIPs should be updated on screen, end here
+            if (onlyDIPsAndOpMode)
+            {
+                return;
+            }
+
+            // tmr1 best
+            uctbSamplingSpeed.Value = configPacket.tmr1Best;
 
             // using soft dips?
             ckUseSoftDIPs.Checked = configPacket.useSoftDIPs == 0xFF;
@@ -521,7 +531,7 @@ namespace config1v1
                 // single loop
                 { "0", new List<string>() { "Relay A pulsed type", "Relay A extended pulse", "Relay A pulse on exit", "Relay B pulsed type", "Relay B extended pulse", "Relay B pulse on exit", "PPC 1", "PPC 2" } },
                 // dual independent
-                { "1", new List<string>() { "Detect Stop for loop A", "Detect Stop for loop B", "Fail Safe for loop A", "Fail Safe for loop B", "Relay A pulsed type", "Relay B pulsed type", "Extended pulse for relay A", "Extended pulse for relay B" } },
+                { "1", new List<string>() { "Detect Stop for loop A", "Detect Stop for loop B", "Fail Safe for loop A", "Fail Safe for loop B", "Relay A pulsed type", "Relay B pulsed type", "Extended pulse for relay A and relay B", "Pulse on undetect for relay A and relay B" } },
                 // dual directional
                 { "2", new List<string>() { "Detect cancellation of A->B", "Detect cancellaton of B->A", "not in use", "not in use", "not in use", "not in use", "not in use", "not in use" } },
                 // speed trap
@@ -1140,9 +1150,8 @@ namespace config1v1
             // handling of reception of data is in receiver parser
         }
 
-        private void programDeviceToolStripMenuItem_Click(object sender, EventArgs e)
+        private string encodeHexaConfigPacket(TConfigPacket configPacket)
         {
-            // spakuj configPacket u hexadecimalni string pa da ga posaljemo na uredjaj
             string hex = "";
 
             // validVal first (it will always be valid...)
@@ -1230,19 +1239,16 @@ namespace config1v1
 
             // detect stop, drugi dio
             hex += configPacket.detectStopSlowCheckerTmr.ToString("X2");
-            
-            // TODO: sad salji S komandu na uredjaj!
-            // nakon toga odradi G(et) komandu da odradis verifikaciju primljenog!
-            bool verified = true;
 
-            if(!verified)
-            {
-                MessageBox.Show("Verification failed. Please try again!");
-            }
-            else
-            {
-                MessageBox.Show("Programming successfull.");
-            }
+            return hex;
+        }
+
+        private void programDeviceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // spakuj configPacket u hexadecimalni string pa da ga posaljemo na uredjaj
+            hex2send = encodeHexaConfigPacket(configPacket);
+
+            sendDataToDevice("S"); // this will initiate the programming procedure
         }
 
         private void restartCPUToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1266,12 +1272,16 @@ namespace config1v1
                 {
                     sp.Close();
                     cs = "Disconnected";
+                    tsbConnectDisconnect.BackColor = System.Drawing.Color.PeachPuff;
+                    tssConnectionStatus.BackColor = System.Drawing.Color.PeachPuff;
                 }
                 else
                 {
                     sp.PortName = "COM" + ConfigurationManager.AppSettings["comport‌​"];
                     sp.Open();
                     cs = "Connected to " + sp.PortName;
+                    tsbConnectDisconnect.BackColor = System.Drawing.Color.LightGreen;
+                    tssConnectionStatus.BackColor = System.Drawing.Color.LightGreen;
                 }
             }
             catch(Exception)
@@ -1485,19 +1495,33 @@ namespace config1v1
                                         // ovdje smo dobili dva DIPs responsa, jer imamo 2 DIP-a u device-u
                                         // DIPS[%u]>%02X\r\nDIPS[%u]>%02X\r\n
                                         string[] tmp = cmd.Split(new string[] { crlf }, StringSplitOptions.None);
-                                        List<string> errors = new List<string>(tmp);
-                                        foreach (string loopErr in errors)
+                                        List<string> dips = new List<string>(tmp);
+                                        foreach (string oneDip in dips)
                                         {
-                                            int loopId = extractLoopIdFromResponse(loopErr);
-                                            string paramVal = extractParamValueFromResponse(loopErr);
+                                            int loopId = extractLoopIdFromResponse(oneDip);
+                                            string paramVal = extractParamValueFromResponse(oneDip + "\r\n");
                                             try
                                             {
                                                 deviceStuff.dips[loopId] = byte.Parse(paramVal, System.Globalization.NumberStyles.HexNumber);
+
+                                                // update the config packet dips also
+                                                if (loopId == 0)
+                                                {
+                                                    configPacket.softDIPA = deviceStuff.dips[loopId];
+                                                }
+                                                else
+                                                {
+                                                    configPacket.softDIPB = deviceStuff.dips[loopId];
+                                                }
                                             }
                                             catch (Exception)
                                             {
                                                 // fail silently...
+                                                return;
                                             }
+
+                                            // update only DIPs to screen
+                                            configPacketToScreen(true);
                                         }
                                     }
                                     // response on soft-reset
@@ -1563,9 +1587,13 @@ namespace config1v1
                                             return;
                                         }
 
-                                        // TODO: POCNI SLANJE NEKAKO
+                                        // restart index
+                                        commSettingIndex = 0;
+                                        tssProgress.Maximum = EE_SIZE * 2;
+                                        tssProgress.Value = 0;
 
                                         // all good, switch to "communication SETting" state
+                                        // we will now get "<" command that will start "pulling data from us"
                                         rxState = TRXState.Comm_Setting;
                                     }
                                     // else if...
@@ -1576,18 +1604,42 @@ namespace config1v1
                     break;
 
                 case TRXState.Comm_Setting:
-                    //tssDeviceState.Text = tssDeviceState.Tag.ToString().Replace("%", "Communicating");
+                    switch (cmd)
+                    {
+                        // programming failed because of timeout
+                        case "ERR>\r\n":
+                            MessageBox.Show("Programming failed because of timeout in device.");
+                            rxState = TRXState.Comm; // switch back to comm mode
+                            break;
+                        // programming done OK
+                        case "OK>\r\n":
+                            MessageBox.Show("Programming done OK!");
+                            rxState = TRXState.Comm; // switch back to comm mode
 
+                            // after short time reset the progressbar
+                            delayedUIRun(1000, delegate ()
+                            {
+                                tssProgress.Value = 0;
+                            });
+                            break;
+                        // flow control character is here
+                        // device is pulling more data from us
+                        case "SET><\r\n":
+                            string oneByte = hex2send.Substring(commSettingIndex, 1);
+                            sendDataToDevice(oneByte);
+                            commSettingIndex++;
+                            tssProgress.Value = commSettingIndex;
+                            break;
+                    }
                     break;
             }
         }
 
         private bool sendDataToDevice(string data)
         {
-            // if device is in forbidden state, then show an error
-            if (rxState == TRXState.Comm_Setting)
+            if(!sp.IsOpen)
             {
-                MessageBox.Show("Device is not ready to receive the command.");
+                MessageBox.Show("Please first connect to device!");
                 return false;
             }
 
@@ -1734,6 +1786,11 @@ namespace config1v1
             {
                 sendDataToDevice("Q");
             }
+        }
+
+        private void btnReadDIPsFromDevice_Click(object sender, EventArgs e)
+        {
+            sendDataToDevice("T");
         }
     }
 }

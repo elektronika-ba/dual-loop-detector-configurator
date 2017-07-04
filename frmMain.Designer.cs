@@ -47,6 +47,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.readFromDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.returnToRunningModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.restartCPUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -62,10 +63,11 @@
             this.tssDeviceState = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.tsbConnectDisconnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnReadFromDevice = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -73,6 +75,7 @@
             this.sp = new System.IO.Ports.SerialPort(this.components);
             this.tmrTime = new System.Windows.Forms.Timer(this.components);
             this.pnlOperatingMode = new System.Windows.Forms.Panel();
+            this.label26 = new System.Windows.Forms.Label();
             this.ckUseSoftDIPs = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbDIP2 = new System.Windows.Forms.GroupBox();
@@ -181,9 +184,8 @@
             this.tmrUpdateConfigPacket = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.label26 = new System.Windows.Forms.Label();
-            this.returnToRunningModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.label27 = new System.Windows.Forms.Label();
+            this.btnReadDIPsFromDevice = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -325,21 +327,21 @@
             // 
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             this.connectToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.connectToolStripMenuItem.Text = "Connect/Disconnect";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(218, 6);
             // 
             // readFromDeviceToolStripMenuItem
             // 
             this.readFromDeviceToolStripMenuItem.Name = "readFromDeviceToolStripMenuItem";
             this.readFromDeviceToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.readFromDeviceToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.readFromDeviceToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.readFromDeviceToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.readFromDeviceToolStripMenuItem.Text = "Read from device";
             this.readFromDeviceToolStripMenuItem.Click += new System.EventHandler(this.readFromDeviceToolStripMenuItem_Click);
             // 
@@ -348,33 +350,41 @@
             this.programDeviceToolStripMenuItem.Name = "programDeviceToolStripMenuItem";
             this.programDeviceToolStripMenuItem.ShortcutKeyDisplayString = "F3";
             this.programDeviceToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.programDeviceToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.programDeviceToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.programDeviceToolStripMenuItem.Text = "Program device";
             this.programDeviceToolStripMenuItem.Click += new System.EventHandler(this.programDeviceToolStripMenuItem_Click);
+            // 
+            // returnToRunningModeToolStripMenuItem
+            // 
+            this.returnToRunningModeToolStripMenuItem.Name = "returnToRunningModeToolStripMenuItem";
+            this.returnToRunningModeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.returnToRunningModeToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.returnToRunningModeToolStripMenuItem.Text = "Return to running mode";
+            this.returnToRunningModeToolStripMenuItem.Click += new System.EventHandler(this.returnToRunningModeToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(218, 6);
             // 
             // restartCPUToolStripMenuItem
             // 
             this.restartCPUToolStripMenuItem.Name = "restartCPUToolStripMenuItem";
             this.restartCPUToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.restartCPUToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.restartCPUToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.restartCPUToolStripMenuItem.Text = "Restart CPU";
             this.restartCPUToolStripMenuItem.Click += new System.EventHandler(this.restartCPUToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(218, 6);
             // 
             // factoryResetToolStripMenuItem
             // 
             this.factoryResetToolStripMenuItem.Name = "factoryResetToolStripMenuItem";
             this.factoryResetToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.factoryResetToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.factoryResetToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.factoryResetToolStripMenuItem.Text = "Factory reset";
             this.factoryResetToolStripMenuItem.Click += new System.EventHandler(this.factoryResetToolStripMenuItem_Click);
             // 
@@ -417,6 +427,7 @@
             // 
             // tssConnectionStatus
             // 
+            this.tssConnectionStatus.BackColor = System.Drawing.Color.PeachPuff;
             this.tssConnectionStatus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tssConnectionStatus.Name = "tssConnectionStatus";
             this.tssConnectionStatus.Size = new System.Drawing.Size(117, 17);
@@ -443,6 +454,7 @@
             // 
             // tssCurrentOPMODE
             // 
+            this.tssCurrentOPMODE.BackColor = System.Drawing.SystemColors.ControlDark;
             this.tssCurrentOPMODE.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tssCurrentOPMODE.Name = "tssCurrentOPMODE";
             this.tssCurrentOPMODE.Size = new System.Drawing.Size(95, 17);
@@ -466,7 +478,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton2,
+            this.tsbConnectDisconnect,
             this.toolStripSeparator6,
             this.btnReadFromDevice,
             this.toolStripButton1,
@@ -481,15 +493,16 @@
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton2
+            // tsbConnectDisconnect
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(143, 22);
-            this.toolStripButton2.Text = "Connect/Disconnect (F1)";
-            this.toolStripButton2.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            this.tsbConnectDisconnect.BackColor = System.Drawing.Color.PeachPuff;
+            this.tsbConnectDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbConnectDisconnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnectDisconnect.Image")));
+            this.tsbConnectDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbConnectDisconnect.Name = "tsbConnectDisconnect";
+            this.tsbConnectDisconnect.Size = new System.Drawing.Size(143, 22);
+            this.tsbConnectDisconnect.Text = "Connect/Disconnect (F1)";
+            this.tsbConnectDisconnect.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
@@ -515,6 +528,16 @@
             this.toolStripButton1.Size = new System.Drawing.Size(117, 22);
             this.toolStripButton1.Text = "Program device (F3)";
             this.toolStripButton1.Click += new System.EventHandler(this.programDeviceToolStripMenuItem_Click);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(162, 22);
+            this.toolStripButton5.Text = "Return to running mode (F4)";
+            this.toolStripButton5.Click += new System.EventHandler(this.returnToRunningModeToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
@@ -560,6 +583,8 @@
             // 
             // pnlOperatingMode
             // 
+            this.pnlOperatingMode.Controls.Add(this.btnReadDIPsFromDevice);
+            this.pnlOperatingMode.Controls.Add(this.label27);
             this.pnlOperatingMode.Controls.Add(this.label26);
             this.pnlOperatingMode.Controls.Add(this.ckUseSoftDIPs);
             this.pnlOperatingMode.Controls.Add(this.pictureBox1);
@@ -568,12 +593,24 @@
             this.pnlOperatingMode.Controls.Add(this.label2);
             this.pnlOperatingMode.Controls.Add(this.label1);
             this.pnlOperatingMode.Controls.Add(this.cbOperatingMode);
+            this.pnlOperatingMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlOperatingMode.Location = new System.Drawing.Point(224, 49);
             this.pnlOperatingMode.Name = "pnlOperatingMode";
-            this.pnlOperatingMode.Size = new System.Drawing.Size(159, 129);
+            this.pnlOperatingMode.Size = new System.Drawing.Size(728, 579);
             this.pnlOperatingMode.TabIndex = 5;
             this.pnlOperatingMode.Tag = "0";
             this.pnlOperatingMode.Visible = false;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(234, 311);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(461, 26);
+            this.label26.TabIndex = 7;
+            this.label26.Text = "Use this panel to configure the device operating mode when hardware DIP settings " +
+    "are disabled.\r\nThese settings are ignored if you are using DIP switches on devic" +
+    "e!";
             // 
             // ckUseSoftDIPs
             // 
@@ -816,7 +853,7 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(159, 27);
+            this.label2.Size = new System.Drawing.Size(728, 27);
             this.label2.TabIndex = 2;
             this.label2.Tag = "title";
             this.label2.Text = "op modes";
@@ -837,7 +874,7 @@
             this.cbOperatingMode.FormattingEnabled = true;
             this.cbOperatingMode.Items.AddRange(new object[] {
             "Single Channel (A)",
-            "Dual Channel Independent (A) & (B)",
+            "Dual Channel Independent (A) and (B)",
             "Dual Channel Directional Logic (A + B)",
             "Speed Trap (A + B)"});
             this.cbOperatingMode.Location = new System.Drawing.Point(97, 35);
@@ -1941,42 +1978,33 @@
             this.saveFileDialog.FileName = "profile.xml";
             this.saveFileDialog.Filter = "DLD Profiles|*.xml";
             // 
-            // label26
+            // label27
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(234, 311);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(461, 26);
-            this.label26.TabIndex = 7;
-            this.label26.Text = "Use this panel to configure the device operating mode when hardware DIP settings " +
-    "are disabled.\r\nThese settings are ignored if you are using DIP switches on devic" +
-    "e!";
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(234, 347);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(422, 13);
+            this.label27.TabIndex = 8;
+            this.label27.Text = "If you want to read device\'s current operating mode and options, click the button" +
+    " bellow:";
             // 
-            // returnToRunningModeToolStripMenuItem
+            // btnReadDIPsFromDevice
             // 
-            this.returnToRunningModeToolStripMenuItem.Name = "returnToRunningModeToolStripMenuItem";
-            this.returnToRunningModeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.returnToRunningModeToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.returnToRunningModeToolStripMenuItem.Text = "Return to running mode";
-            this.returnToRunningModeToolStripMenuItem.Click += new System.EventHandler(this.returnToRunningModeToolStripMenuItem_Click);
-            // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(162, 22);
-            this.toolStripButton5.Text = "Return to running mode (F4)";
-            this.toolStripButton5.Click += new System.EventHandler(this.returnToRunningModeToolStripMenuItem_Click);
+            this.btnReadDIPsFromDevice.Location = new System.Drawing.Point(235, 372);
+            this.btnReadDIPsFromDevice.Name = "btnReadDIPsFromDevice";
+            this.btnReadDIPsFromDevice.Size = new System.Drawing.Size(105, 23);
+            this.btnReadDIPsFromDevice.TabIndex = 9;
+            this.btnReadDIPsFromDevice.Text = "Read from device";
+            this.btnReadDIPsFromDevice.UseVisualStyleBackColor = true;
+            this.btnReadDIPsFromDevice.Click += new System.EventHandler(this.btnReadDIPsFromDevice_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 650);
-            this.Controls.Add(this.panel5);
             this.Controls.Add(this.pnlOperatingMode);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -2086,7 +2114,7 @@
         private System.Windows.Forms.CheckBox checkBox15;
         private System.Windows.Forms.CheckBox checkBox16;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton tsbConnectDisconnect;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.Panel panel1;
@@ -2192,6 +2220,8 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.ToolStripMenuItem returnToRunningModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.Button btnReadDIPsFromDevice;
+        private System.Windows.Forms.Label label27;
     }
 }
 
