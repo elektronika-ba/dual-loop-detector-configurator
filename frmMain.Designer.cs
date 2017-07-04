@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.lbMenu = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +75,8 @@
             this.sp = new System.IO.Ports.SerialPort(this.components);
             this.tmrTime = new System.Windows.Forms.Timer(this.components);
             this.pnlOperatingMode = new System.Windows.Forms.Panel();
+            this.btnReadDIPsFromDevice = new System.Windows.Forms.Button();
+            this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.ckUseSoftDIPs = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -184,8 +186,6 @@
             this.tmrUpdateConfigPacket = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.label27 = new System.Windows.Forms.Label();
-            this.btnReadDIPsFromDevice = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -593,13 +593,32 @@
             this.pnlOperatingMode.Controls.Add(this.label2);
             this.pnlOperatingMode.Controls.Add(this.label1);
             this.pnlOperatingMode.Controls.Add(this.cbOperatingMode);
-            this.pnlOperatingMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlOperatingMode.Location = new System.Drawing.Point(224, 49);
             this.pnlOperatingMode.Name = "pnlOperatingMode";
-            this.pnlOperatingMode.Size = new System.Drawing.Size(728, 579);
+            this.pnlOperatingMode.Size = new System.Drawing.Size(170, 127);
             this.pnlOperatingMode.TabIndex = 5;
             this.pnlOperatingMode.Tag = "0";
             this.pnlOperatingMode.Visible = false;
+            // 
+            // btnReadDIPsFromDevice
+            // 
+            this.btnReadDIPsFromDevice.Location = new System.Drawing.Point(235, 372);
+            this.btnReadDIPsFromDevice.Name = "btnReadDIPsFromDevice";
+            this.btnReadDIPsFromDevice.Size = new System.Drawing.Size(105, 23);
+            this.btnReadDIPsFromDevice.TabIndex = 9;
+            this.btnReadDIPsFromDevice.Text = "Read from device";
+            this.btnReadDIPsFromDevice.UseVisualStyleBackColor = true;
+            this.btnReadDIPsFromDevice.Click += new System.EventHandler(this.btnReadDIPsFromDevice_Click);
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(234, 347);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(422, 13);
+            this.label27.TabIndex = 8;
+            this.label27.Text = "If you want to read device\'s current operating mode and options, click the button" +
+    " bellow:";
             // 
             // label26
             // 
@@ -853,7 +872,7 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(728, 27);
+            this.label2.Size = new System.Drawing.Size(170, 27);
             this.label2.TabIndex = 2;
             this.label2.Tag = "title";
             this.label2.Text = "op modes";
@@ -903,10 +922,10 @@
             // 
             this.chartFreqVsSens.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.Name = "ChartArea1";
-            this.chartFreqVsSens.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartFreqVsSens.Legends.Add(legend4);
+            chartArea1.Name = "ChartArea1";
+            this.chartFreqVsSens.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartFreqVsSens.Legends.Add(legend1);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
             this.chartFreqVsSens.Size = new System.Drawing.Size(419, 396);
@@ -979,6 +998,7 @@
             this.uctbSamplingSpeed.Size = new System.Drawing.Size(709, 71);
             this.uctbSamplingSpeed.SmallChange = 10;
             this.uctbSamplingSpeed.TabIndex = 6;
+            this.uctbSamplingSpeed.Tag = "UPDATE_CONFIG_PACKET";
             this.uctbSamplingSpeed.TickFrequency = 100;
             this.uctbSamplingSpeed.Value = 30000;
             this.uctbSamplingSpeed.TrackbarChanged += new System.EventHandler(this.ucTrackBar1_TrackbarChanged);
@@ -1977,26 +1997,6 @@
             this.saveFileDialog.DefaultExt = "xml";
             this.saveFileDialog.FileName = "profile.xml";
             this.saveFileDialog.Filter = "DLD Profiles|*.xml";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(234, 347);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(422, 13);
-            this.label27.TabIndex = 8;
-            this.label27.Text = "If you want to read device\'s current operating mode and options, click the button" +
-    " bellow:";
-            // 
-            // btnReadDIPsFromDevice
-            // 
-            this.btnReadDIPsFromDevice.Location = new System.Drawing.Point(235, 372);
-            this.btnReadDIPsFromDevice.Name = "btnReadDIPsFromDevice";
-            this.btnReadDIPsFromDevice.Size = new System.Drawing.Size(105, 23);
-            this.btnReadDIPsFromDevice.TabIndex = 9;
-            this.btnReadDIPsFromDevice.Text = "Read from device";
-            this.btnReadDIPsFromDevice.UseVisualStyleBackColor = true;
-            this.btnReadDIPsFromDevice.Click += new System.EventHandler(this.btnReadDIPsFromDevice_Click);
             // 
             // frmMain
             // 

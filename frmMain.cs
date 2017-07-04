@@ -85,8 +85,8 @@ namespace config1v1
                     this.sensitivitiesLoopA.Add(new TSensitivity(1, 1));
                     this.sensitivitiesLoopB.Add(new TSensitivity(1, 1));
                 }
-                this.softDIPA = 0;
-                this.softDIPB = 0;
+                this.softDIPA = 0x00;
+                this.softDIPB = 0x00;
                 this.dcddThreshold = 1;
                 this.dcddTmr = 1;
                 this.detectStopSlowCheckerTmr = 1;
@@ -517,7 +517,7 @@ namespace config1v1
             Dictionary<string, List<string>> DIP1texts = new Dictionary<string, List<string>>()
             {
                 // single loop
-                { "0", new List<string>() { "Mode 1", "Mode 2", "Reserved", "Alternative oscillator frequency", "Additional signal filtering", "Fail Safe", "ASB", "Detect Stop on relay B" } },
+                { "0", new List<string>() { "Mode 1", "Mode 2", "Reserved", "Alternative oscillator frequency", "Additional signal filtering", "Fail Safe", "ASB", "Detect Stop on relay A" } },
                 // dual independent
                 { "1", new List<string>() { "Mode 1", "Mode 2", "Reserved", "Alternative oscillator frequency for loop A", "Alternative oscillator frequency for loop B", "Additional signal filtering for loop A and B", "ASB for loop A and B", "PPC 2 for loop A and B" } },
                 // dual directional
@@ -529,9 +529,9 @@ namespace config1v1
             Dictionary<string, List<string>> DIP2texts = new Dictionary<string, List<string>>()
             {
                 // single loop
-                { "0", new List<string>() { "Relay A pulsed type", "Relay A extended pulse", "Relay A pulse on exit", "Relay B pulsed type", "Relay B extended pulse", "Relay B pulse on exit", "PPC 1", "PPC 2" } },
+                { "0", new List<string>() { "Relay A presence type", "Relay A extended pulse", "Relay A pulse on detect", "Relay B presence type", "Relay B extended pulse", "Relay B pulse on detect", "PPC 1", "PPC 2" } },
                 // dual independent
-                { "1", new List<string>() { "Detect Stop for loop A", "Detect Stop for loop B", "Fail Safe for loop A", "Fail Safe for loop B", "Relay A pulsed type", "Relay B pulsed type", "Extended pulse for relay A and relay B", "Pulse on undetect for relay A and relay B" } },
+                { "1", new List<string>() { "Detect Stop for loop A", "Detect Stop for loop B", "Fail Safe for loop A", "Fail Safe for loop B", "Relay A presence type", "Relay B presence type", "Extended pulse for relay A and relay B", "Pulse on detect for relay A and relay B" } },
                 // dual directional
                 { "2", new List<string>() { "Detect cancellation of A->B", "Detect cancellaton of B->A", "not in use", "not in use", "not in use", "not in use", "not in use", "not in use" } },
                 // speed trap
@@ -1608,12 +1608,12 @@ namespace config1v1
                     {
                         // programming failed because of timeout
                         case "ERR>\r\n":
-                            MessageBox.Show("Programming failed because of timeout in device.");
+                            MessageBox.Show("Programming failed because of timeout in device.", "Programming");
                             rxState = TRXState.Comm; // switch back to comm mode
                             break;
                         // programming done OK
                         case "OK>\r\n":
-                            MessageBox.Show("Programming done OK!");
+                            MessageBox.Show("Programming done OK!\r\nDo not forget to restart CPU for changes to take effect.", "Programming");
                             rxState = TRXState.Comm; // switch back to comm mode
 
                             // after short time reset the progressbar
