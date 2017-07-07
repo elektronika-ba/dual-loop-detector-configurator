@@ -31,6 +31,72 @@ namespace config1v1
             Comm_Setting, // device is in uart communication mode, we initiated SET command and now we are working it
         }
 
+        /*
+            Event code	Event description
+            ---------------------------------
+            01,xxx.yyy	Undetect, xxx.yyy=strength of detection in percentages in fixed format 000.000
+            02,xxx.yyy	Rollaway, did not stop, xxx.yyy=strength of detection in percentages in fixed format 000.000
+            03,xxx.yyy	Undetect because of PPC, xxx.yyy=strength of detection in percentages in fixed format 000.000
+            04,xxxxx	Movement while stopped, x=change in fixed format 00000
+            05,xxxxx	Movement before stopped, x=change in fixed format 00000
+            06,xxx.yyy	Repeated stop detected, xxx.yyy=strength of detection in percentages in fixed format 000.000
+            07,xxx.yyy	Initial stop detected, xxx.yyy=strength of detection in percentages in fixed format 000.000
+            08		    Detect! (detection strength can't be calculated yet)
+            09		    Movement after-PPC
+            10,xxx		Speed in km/h or mile/h in fixed 000 format
+            11		    Canceled A->B direction
+            12		    Going back B->A direction
+            13		    Passed B->A
+            14		    Cancelled B->A direction
+            15		    Going back A->B
+            16		    Passed A->B
+            17,xxx		Speed over limit with difference in km/h or mile/h in fixed 000 format
+            18,xxx		Speed under or equal to limit with difference in km/h or mile/h in fixed 000 format
+        */
+        private enum TEventCode
+        {
+            Undetect = 1,
+            Rollaway = 2,
+            UndetectPPC = 3,
+            MovementWhileStopped = 4,
+            MovementBeforeStopped = 5,
+            RepeatedStopDetected = 6,
+            InitialStopDetected = 7,
+            Detect = 8,
+            MovementAfterPPC = 9,
+            SpeedReport = 10,
+            DirectionA2BCancel = 11,
+            DirectionB2AGoingBack = 12,
+            DirectionB2APassed = 13,
+            DirectionB2ACancel = 14,
+            DirectionA2BGoingBack = 15,
+            DirectionA2BPassed = 16,
+            SpeedWasOverLimit = 17,
+            SpeedWasUnderOrEqualToLimit = 18,
+        }
+
+        Dictionary<int, string> EventName = new Dictionary<int, string>()
+        {
+            { 1, "Undetect, strength: $%" },
+            { 2, "Rollaway without stopping, strength: $%" },
+            { 3, "Undetect because of PPC, strength: $%" },
+            { 4, "Movement while stop detected, change: $" },
+            { 5, "Movement before stopping, change: $" },
+            { 6, "Repeated stop detected, strength: $%" },
+            { 7, "Initial stop detected, strength: $%" },
+            { 8, "Detect" },
+            { 9, "Movement after PPC" },
+            { 10, "Speed report: $" },
+            { 11, "A->B pass cancelled" },
+            { 12, "B->A going back" },
+            { 13, "B->A passed" },
+            { 14, "B->A pass cancel" },
+            { 15, "A->B going back" },
+            { 16, "A->B passed" },
+            { 17, "Overspeeding detected, excess: $" },
+            { 18, "Underspeeding, with: $" },
+        };
+
         // used during programming (sending data to device)
         private int commSettingIndex = 0;
         private string hex2send = "";
@@ -1258,7 +1324,10 @@ namespace config1v1
 
         private void factoryResetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            sendDataToDevice("W");
+            if (MessageBox.Show("Are you sure you want to perform factory reset?", "Factory reset", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                sendDataToDevice("W");
+            }
         }
 
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1348,6 +1417,17 @@ namespace config1v1
             return true;
         }
 
+        private void addToEventLog(string txt, string prependTxt = "", bool useTimeStamp = true)
+        {
+            txt = prependTxt + " " + txt;
+
+            if (useTimeStamp)
+            {
+                txt = DateTime.Now.ToShortTimeString() + ": " + txt;
+            }
+            txtLog.AppendText(txt + Environment.NewLine);
+        }
+
         private void processCommand(string cmd)
         {
             if (string.IsNullOrEmpty(cmd)) return;
@@ -1357,15 +1437,68 @@ namespace config1v1
             {
                 // at startup, we will assume that device is running
                 case TRXState.Running:
-                    // here we can get some running data, such as event logging, realtime frequency as it changes.
+                    // here we can get some running data, such as event logging, realtime frequency as it changes. that is basically it
                     // event
-                    if(cmd.Contains("EVENT["))
+                    if(cmd.StartsWith("EVENT["))
                     {
+                        // ovdje smo dobili jedan event u formatu: EVENT[loop_id_ili_X]>EVENT_CODE,_optional_event_parameter_\r\n
+                        int loopId = extractLoopIdFromResponse(cmd);
+                        string paramVal = extractParamValueFromResponse(cmd);
+                        string ev = "";
 
+                        int eventId = -1;
+                        string eventParam = "";
+                        try
+                        {
+                            if (paramVal.Contains(","))
+                            {
+                                List<string> lis = new List<string>(paramVal.Split(','));
+                                eventId = int.Parse(lis[0]);
+                                eventParam = lis[1];
+                            }
+                            else
+                            {
+                                eventId = int.Parse(paramVal);
+                            }
+                        }
+                        catch(Exception)
+                        {
+                            // failed while parsing...
+                            //addToEventLog("Parsing exception!");
+                            return;
+                        }
+
+                        // unsupported event!?
+                        if (!EventName.ContainsKey(eventId)) return;
+
+                        ev = EventName[eventId];
+                        ev = ev.Replace("$", eventParam);
+
+                        // ako je dosao loop id -1, znaci da je event nije nije od nijedne petlje nego "spojeni event"
+                        if (loopId == -1)
+                        {
+                            lblLastJointEvent.Text = lblLastJointEvent.Tag.ToString().Replace("%", ev);
+                            // log to window
+                            addToEventLog(ev);
+                        }
+                        else if (loopId == 0)
+                        {
+                            lblLastEventLoopA.Text = lblLastEventLoopA.Tag.ToString().Replace("%", ev);
+                            // log to window
+                            addToEventLog(ev, "[LOOP A]");
+                        }
+                        else if (loopId == 1)
+                        {
+                            lblLastEventLoopB.Text = lblLastEventLoopB.Tag.ToString().Replace("%", ev);
+                            // log to window
+                            addToEventLog(ev, "[LOOP B]");
+                        }
                     }
                     // realtime freq analysis
-                    else if(cmd.Contains("FREQ["))
+                    else if(cmd.StartsWith("A["))
                     {
+                        // TODO TODO
+                        /*
                         // ovdje smo dobili dva freq responsa, jer imamo 2 petlje u device-u
                         // FREQ[%u]>%0.5f\r\nFREQ[%u]>%0.5f\r\n
                         string[] tmp = cmd.Split(new string[] { crlf }, StringSplitOptions.None);
@@ -1383,6 +1516,7 @@ namespace config1v1
                                 // fail silently...
                             }
                         }
+                        */
                     }
                     // device answered to our communicatino request?
                     else if(cmd.Contains("READY>v1"))
@@ -1407,11 +1541,13 @@ namespace config1v1
                                 break;
                             // logging is turned on
                             case "LOG>1\r\n":
-                                MessageBox.Show("Logging is now ON!");
+                                lblLoggingState.Text = lblLoggingState.Tag.ToString().Replace("%", "On");
+
+                                sendDataToDevice("Q"); // logging is ON, return to running mode
                                 break;
                             // logging is turned off
                             case "LOG>0\r\n":
-                                MessageBox.Show("Logging is now OFF!");
+                                lblLoggingState.Text = lblLoggingState.Tag.ToString().Replace("%", "Off");
                                 break;
                             // realtime freq analysis is turned on
                             case "FREQ>1\r\n":
@@ -1422,6 +1558,8 @@ namespace config1v1
                                 MessageBox.Show("Realtime frequency analysis is now OFF!");
                                 break;
                             // resumed to normal operation
+                            // quiting from comm mode
+                            case "QUIT>\r\n":
                             case "RESUME>\r\n":
                                 rxState = TRXState.Running;
                                 break;
@@ -1591,6 +1729,7 @@ namespace config1v1
                                         commSettingIndex = 0;
                                         tssProgress.Maximum = EE_SIZE * 2;
                                         tssProgress.Value = 0;
+                                        tssProgress.Visible = true;
 
                                         // all good, switch to "communication SETting" state
                                         // we will now get "<" command that will start "pulling data from us"
@@ -1620,6 +1759,7 @@ namespace config1v1
                             delayedUIRun(1000, delegate ()
                             {
                                 tssProgress.Value = 0;
+                                tssProgress.Visible = false;
                             });
                             break;
                         // flow control character is here
@@ -1683,6 +1823,7 @@ namespace config1v1
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
                 tssProgress.Maximum = _UART_COMM_MODE_ENTER_DELAY_MS / 1000;
+                tssProgress.Visible = true;
                 while(rxState != TRXState.Comm && sw.ElapsedMilliseconds <= _UART_COMM_MODE_ENTER_DELAY_MS)
                 {
                     // I am not happy with this, but...
@@ -1695,6 +1836,7 @@ namespace config1v1
                 delayedUIRun(1000, delegate ()
                 {
                     tssProgress.Value = 0;
+                    tssProgress.Visible = false;
                 });
 
                 // return whatever state we are in currently, we should have succeeded
@@ -1729,6 +1871,11 @@ namespace config1v1
             }
         }
 
+        /// <summary>
+        /// Extracts loop id from parameter: SOMETHING[_loop_id_]>SOMETHING...
+        /// </summary>
+        /// <param name="r"></param>
+        /// <returns>Returns loop id, or -1 if loop id is not a number. It is possible that X enters as loop number and it will be returned as -1</returns>
         private int extractLoopIdFromResponse(string r)
         {
             string pattern = Regex.Escape("[") + "([0-9]*)" + Regex.Escape("]");
@@ -1741,7 +1888,7 @@ namespace config1v1
                 }
                 else
                 {
-                    throw new Exception("");
+                    return -1;
                 }
             }
             catch (Exception)
@@ -1785,12 +1932,24 @@ namespace config1v1
             if (rxState != TRXState.Running)
             {
                 sendDataToDevice("Q");
+                rxState = TRXState.Running; // mozemo ovdje slobodno
             }
         }
 
         private void btnReadDIPsFromDevice_Click(object sender, EventArgs e)
         {
             sendDataToDevice("T");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // toggle logging mode
+            sendDataToDevice("L");
+        }
+
+        private void btnClearLog_Click(object sender, EventArgs e)
+        {
+            txtLog.Clear();
         }
     }
 }

@@ -74,7 +74,7 @@
             this.udComPort.Size = new System.Drawing.Size(192, 20);
             this.udComPort.TabIndex = 6;
             this.udComPort.Value = new decimal(new int[] {
-            5,
+            6,
             0,
             0,
             0});
