@@ -30,8 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lbMenu = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -187,15 +193,21 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.label28 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.lblLoggingState = new System.Windows.Forms.Label();
-            this.lblLastEventLoopA = new System.Windows.Forms.Label();
-            this.lblLastEventLoopB = new System.Windows.Forms.Label();
-            this.lblLastJointEvent = new System.Windows.Forms.Label();
-            this.txtLog = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
             this.btnClearLog = new System.Windows.Forms.Button();
+            this.label29 = new System.Windows.Forms.Label();
+            this.txtLog = new System.Windows.Forms.TextBox();
+            this.lblLastJointEvent = new System.Windows.Forms.Label();
+            this.lblLastEventLoopB = new System.Windows.Forms.Label();
+            this.lblLastEventLoopA = new System.Windows.Forms.Label();
+            this.lblLoggingState = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.label30 = new System.Windows.Forms.Label();
+            this.btnSignalAnalysis = new System.Windows.Forms.Button();
+            this.lblSignalAnalysis = new System.Windows.Forms.Label();
+            this.chAnalysisLoopA = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chAnalysisLoopB = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -219,6 +231,9 @@
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
+            this.panel10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopB)).BeginInit();
             this.SuspendLayout();
             // 
             // lbMenu
@@ -237,7 +252,8 @@
             "Detect stop",
             "Drift compensation during detection",
             "Speed trap",
-            "Event viewer"});
+            "Event viewer",
+            "Signal analysis"});
             this.lbMenu.Location = new System.Drawing.Point(0, 49);
             this.lbMenu.Name = "lbMenu";
             this.lbMenu.Size = new System.Drawing.Size(224, 579);
@@ -929,7 +945,7 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Location = new System.Drawing.Point(400, 49);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(177, 127);
+            this.panel1.Size = new System.Drawing.Size(177, 131);
             this.panel1.TabIndex = 6;
             this.panel1.Tag = "1";
             // 
@@ -937,10 +953,10 @@
             // 
             this.chartFreqVsSens.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea3.Name = "ChartArea1";
-            this.chartFreqVsSens.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartFreqVsSens.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chartFreqVsSens.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartFreqVsSens.Legends.Add(legend1);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
             this.chartFreqVsSens.Size = new System.Drawing.Size(0, 396);
@@ -2024,68 +2040,45 @@
             this.panel9.Controls.Add(this.lblLoggingState);
             this.panel9.Controls.Add(this.button1);
             this.panel9.Controls.Add(this.label28);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(224, 49);
+            this.panel9.Location = new System.Drawing.Point(768, 52);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(728, 579);
+            this.panel9.Size = new System.Drawing.Size(171, 444);
             this.panel9.TabIndex = 14;
             this.panel9.Tag = "9";
             // 
-            // label28
+            // btnClearLog
             // 
-            this.label28.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label28.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label28.Location = new System.Drawing.Point(0, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(728, 27);
-            this.label28.TabIndex = 8;
-            this.label28.Tag = "title";
-            this.label28.Text = "event viewer";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearLog.Location = new System.Drawing.Point(73, 408);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(85, 23);
+            this.btnClearLog.TabIndex = 16;
+            this.btnClearLog.Text = "Clear log";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
             // 
-            // button1
+            // label29
             // 
-            this.button1.Location = new System.Drawing.Point(6, 32);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Event logging on/off";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(9, 138);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(70, 13);
+            this.label29.TabIndex = 15;
+            this.label29.Text = "Event logger:";
             // 
-            // lblLoggingState
+            // txtLog
             // 
-            this.lblLoggingState.AutoSize = true;
-            this.lblLoggingState.Location = new System.Drawing.Point(143, 37);
-            this.lblLoggingState.Name = "lblLoggingState";
-            this.lblLoggingState.Size = new System.Drawing.Size(118, 13);
-            this.lblLoggingState.TabIndex = 10;
-            this.lblLoggingState.Tag = "Logging is currently: %";
-            this.lblLoggingState.Text = "Logging is currently: Off";
-            // 
-            // lblLastEventLoopA
-            // 
-            this.lblLastEventLoopA.AutoSize = true;
-            this.lblLastEventLoopA.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLastEventLoopA.Location = new System.Drawing.Point(9, 64);
-            this.lblLastEventLoopA.Name = "lblLastEventLoopA";
-            this.lblLastEventLoopA.Size = new System.Drawing.Size(173, 16);
-            this.lblLastEventLoopA.TabIndex = 11;
-            this.lblLastEventLoopA.Tag = "Last event loop A: %";
-            this.lblLastEventLoopA.Text = "Last event loop A: None";
-            // 
-            // lblLastEventLoopB
-            // 
-            this.lblLastEventLoopB.AutoSize = true;
-            this.lblLastEventLoopB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLastEventLoopB.Location = new System.Drawing.Point(9, 88);
-            this.lblLastEventLoopB.Name = "lblLastEventLoopB";
-            this.lblLastEventLoopB.Size = new System.Drawing.Size(173, 16);
-            this.lblLastEventLoopB.TabIndex = 12;
-            this.lblLastEventLoopB.Tag = "Last event loop B: %";
-            this.lblLastEventLoopB.Text = "Last event loop B: None";
+            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLog.Location = new System.Drawing.Point(9, 154);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtLog.Size = new System.Drawing.Size(150, 247);
+            this.txtLog.TabIndex = 14;
+            this.txtLog.WordWrap = false;
             // 
             // lblLastJointEvent
             // 
@@ -2098,45 +2091,152 @@
             this.lblLastJointEvent.Tag = "Last joint event: %";
             this.lblLastJointEvent.Text = "Last joint event: None";
             // 
-            // txtLog
+            // lblLastEventLoopB
             // 
-            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblLastEventLoopB.AutoSize = true;
+            this.lblLastEventLoopB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastEventLoopB.Location = new System.Drawing.Point(9, 88);
+            this.lblLastEventLoopB.Name = "lblLastEventLoopB";
+            this.lblLastEventLoopB.Size = new System.Drawing.Size(173, 16);
+            this.lblLastEventLoopB.TabIndex = 12;
+            this.lblLastEventLoopB.Tag = "Last event loop B: %";
+            this.lblLastEventLoopB.Text = "Last event loop B: None";
+            // 
+            // lblLastEventLoopA
+            // 
+            this.lblLastEventLoopA.AutoSize = true;
+            this.lblLastEventLoopA.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastEventLoopA.Location = new System.Drawing.Point(9, 64);
+            this.lblLastEventLoopA.Name = "lblLastEventLoopA";
+            this.lblLastEventLoopA.Size = new System.Drawing.Size(173, 16);
+            this.lblLastEventLoopA.TabIndex = 11;
+            this.lblLastEventLoopA.Tag = "Last event loop A: %";
+            this.lblLastEventLoopA.Text = "Last event loop A: None";
+            // 
+            // lblLoggingState
+            // 
+            this.lblLoggingState.AutoSize = true;
+            this.lblLoggingState.Location = new System.Drawing.Point(143, 37);
+            this.lblLoggingState.Name = "lblLoggingState";
+            this.lblLoggingState.Size = new System.Drawing.Size(118, 13);
+            this.lblLoggingState.TabIndex = 10;
+            this.lblLoggingState.Tag = "Logging is currently: %";
+            this.lblLoggingState.Text = "Logging is currently: Off";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 32);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(129, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Event logging on/off";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label28
+            // 
+            this.label28.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.label28.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label28.Location = new System.Drawing.Point(0, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(171, 27);
+            this.label28.TabIndex = 8;
+            this.label28.Tag = "title";
+            this.label28.Text = "event viewer";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.chAnalysisLoopB);
+            this.panel10.Controls.Add(this.chAnalysisLoopA);
+            this.panel10.Controls.Add(this.lblSignalAnalysis);
+            this.panel10.Controls.Add(this.btnSignalAnalysis);
+            this.panel10.Controls.Add(this.label30);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel10.Location = new System.Drawing.Point(224, 49);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(728, 579);
+            this.panel10.TabIndex = 15;
+            this.panel10.Tag = "10";
+            // 
+            // label30
+            // 
+            this.label30.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.label30.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label30.Location = new System.Drawing.Point(0, 0);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(728, 27);
+            this.label30.TabIndex = 10;
+            this.label30.Tag = "title";
+            this.label30.Text = "signal analysis";
+            this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnSignalAnalysis
+            // 
+            this.btnSignalAnalysis.Location = new System.Drawing.Point(6, 32);
+            this.btnSignalAnalysis.Name = "btnSignalAnalysis";
+            this.btnSignalAnalysis.Size = new System.Drawing.Size(129, 23);
+            this.btnSignalAnalysis.TabIndex = 11;
+            this.btnSignalAnalysis.Text = "Enable signal analysis";
+            this.btnSignalAnalysis.UseVisualStyleBackColor = true;
+            this.btnSignalAnalysis.Click += new System.EventHandler(this.btnSignalAnalysis_Click);
+            // 
+            // lblSignalAnalysis
+            // 
+            this.lblSignalAnalysis.AutoSize = true;
+            this.lblSignalAnalysis.Location = new System.Drawing.Point(143, 37);
+            this.lblSignalAnalysis.Name = "lblSignalAnalysis";
+            this.lblSignalAnalysis.Size = new System.Drawing.Size(149, 13);
+            this.lblSignalAnalysis.TabIndex = 12;
+            this.lblSignalAnalysis.Tag = "Signal analysis is currently: %";
+            this.lblSignalAnalysis.Text = "Signal analysis is currently: Off";
+            // 
+            // chAnalysisLoopA
+            // 
+            this.chAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLog.Location = new System.Drawing.Point(9, 154);
-            this.txtLog.Multiline = true;
-            this.txtLog.Name = "txtLog";
-            this.txtLog.ReadOnly = true;
-            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(707, 382);
-            this.txtLog.TabIndex = 14;
-            this.txtLog.WordWrap = false;
+            chartArea3.Name = "ChartArea1";
+            this.chAnalysisLoopA.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chAnalysisLoopA.Legends.Add(legend3);
+            this.chAnalysisLoopA.Location = new System.Drawing.Point(6, 67);
+            this.chAnalysisLoopA.Name = "chAnalysisLoopA";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chAnalysisLoopA.Series.Add(series2);
+            this.chAnalysisLoopA.Size = new System.Drawing.Size(710, 241);
+            this.chAnalysisLoopA.TabIndex = 13;
+            this.chAnalysisLoopA.Text = "LOOP A";
             // 
-            // label29
+            // chAnalysisLoopB
             // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(9, 138);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(70, 13);
-            this.label29.TabIndex = 15;
-            this.label29.Text = "Event logger:";
-            // 
-            // btnClearLog
-            // 
-            this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearLog.Location = new System.Drawing.Point(630, 543);
-            this.btnClearLog.Name = "btnClearLog";
-            this.btnClearLog.Size = new System.Drawing.Size(85, 23);
-            this.btnClearLog.TabIndex = 16;
-            this.btnClearLog.Text = "Clear log";
-            this.btnClearLog.UseVisualStyleBackColor = true;
-            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
+            this.chAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.Name = "ChartArea1";
+            this.chAnalysisLoopB.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chAnalysisLoopB.Legends.Add(legend2);
+            this.chAnalysisLoopB.Location = new System.Drawing.Point(6, 315);
+            this.chAnalysisLoopB.Name = "chAnalysisLoopB";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chAnalysisLoopB.Series.Add(series1);
+            this.chAnalysisLoopB.Size = new System.Drawing.Size(710, 241);
+            this.chAnalysisLoopB.TabIndex = 14;
+            this.chAnalysisLoopB.Text = "LOOP B";
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 650);
+            this.Controls.Add(this.panel10);
             this.Controls.Add(this.panel9);
             this.Controls.Add(this.pnlOperatingMode);
             this.Controls.Add(this.panel5);
@@ -2198,6 +2298,10 @@
             this.panel8.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopB)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2369,6 +2473,12 @@
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Button btnClearLog;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Button btnSignalAnalysis;
+        private System.Windows.Forms.Label lblSignalAnalysis;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chAnalysisLoopB;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chAnalysisLoopA;
     }
 }
 

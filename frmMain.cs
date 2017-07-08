@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace config1v1
 {
@@ -111,12 +112,16 @@ namespace config1v1
                 err = new List<int>(2);
                 lastEvent = new List<string>(2);
                 dips = new List<byte>(2);
+                freqAnalysis = new List<List<double>>(2);
+                detectState = new List<bool>(2);
                 for (int i = 0; i < 2; i++)
                 {
                     freq.Add(0.0);
                     err.Add(-1);
                     lastEvent.Add("");
                     dips.Add(0x00);
+                    detectState.Add(false);
+                    freqAnalysis.Add(new List<double>());
                 }
                 mode = -1;
             }
@@ -125,6 +130,8 @@ namespace config1v1
             public List<string> lastEvent { get; set; }
             public int mode { get; set; }
             public List<byte> dips { get; set; }
+            public List<List<double>> freqAnalysis { get; set; }
+            public List<bool> detectState { get; set; }
         };
 
         private TDeviceStuff deviceStuff = new TDeviceStuff();
@@ -1419,11 +1426,14 @@ namespace config1v1
 
         private void addToEventLog(string txt, string prependTxt = "", bool useTimeStamp = true)
         {
-            txt = prependTxt + " " + txt;
+            if (!string.IsNullOrEmpty(prependTxt))
+            {
+                txt = prependTxt + " " + txt;
+            }
 
             if (useTimeStamp)
             {
-                txt = DateTime.Now.ToShortTimeString() + ": " + txt;
+                txt = DateTime.Now.ToString("yyyy-MM-dd H:mm:ss") + ": " + txt;
             }
             txtLog.AppendText(txt + Environment.NewLine);
         }
@@ -1497,26 +1507,91 @@ namespace config1v1
                     // realtime freq analysis
                     else if(cmd.StartsWith("A["))
                     {
-                        // TODO TODO
-                        /*
-                        // ovdje smo dobili dva freq responsa, jer imamo 2 petlje u device-u
-                        // FREQ[%u]>%0.5f\r\nFREQ[%u]>%0.5f\r\n
-                        string[] tmp = cmd.Split(new string[] { crlf }, StringSplitOptions.None);
-                        List<string> freqs = new List<string>(tmp);
-                        foreach (string loopFreq in freqs)
+                        // A[id]>12.2122,12.2122,12.2122,-15.3212,-15.3213\r\n
+                        int loopId = extractLoopIdFromResponse(cmd);
+                        string paramVal = extractParamValueFromResponse(cmd);
+
+                        if (paramVal.Length <= 0) return;
+
+                        // IMPORTANT: there is a bug here somewhere, it does not parse LOOP B data for some reason. Sometimes!
+
+                        try
                         {
-                            int loopId = extractLoopIdFromResponse(loopFreq);
-                            string paramVal = extractParamValueFromResponse(loopFreq);
-                            try
+                            if (loopId < 0 || loopId > 1)
                             {
-                                deviceStuff.freq[loopId] = int.Parse(paramVal);
+                                throw new Exception();
                             }
-                            catch (Exception)
+
+                            List<string> ar = new List<string>(paramVal.Split(','));
+                            bool newDetectState = double.Parse(ar[ar.Count - 1]) >= 0; // if last one is positive, then we have a detection, else we dont have a detection
+
+                            // time to start fetching?
+                            if (newDetectState)
                             {
-                                // fail silently...
+                                // first sample with detection-state?
+                                if (!deviceStuff.detectState[loopId])
+                                {
+                                    deviceStuff.freqAnalysis[loopId].Clear();
+                                }
+                                deviceStuff.detectState[loopId] = true;
+
+                                // add samples into buffer (absolute values)
+                                ar.ForEach(i =>
+                                {
+                                    double xy = double.Parse(i);
+                                    deviceStuff.freqAnalysis[loopId].Add(Math.Abs(xy));
+                                });
+                            }
+
+                            // time to end fetching?
+                            if (deviceStuff.detectState[loopId] && !newDetectState)
+                            {
+                                deviceStuff.detectState[loopId] = false;
+
+                                // plotaj!
+
+                                System.Windows.Forms.DataVisualization.Charting.Chart destChart = chAnalysisLoopA;
+                                if(loopId == 1)
+                                {
+                                    destChart = chAnalysisLoopB;
+                                }
+
+                                destChart.Series.Clear();
+                                var seriesChart = new System.Windows.Forms.DataVisualization.Charting.Series
+                                {
+                                    Name = "Signal over time",
+                                    Color = System.Drawing.Color.Green,
+                                    BorderWidth = 2,
+                                    IsVisibleInLegend = false,
+                                    IsXValueIndexed = true,
+                                    YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double,
+                                    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+                                };
+
+                                destChart.Series.Add(seriesChart);
+
+                                // normalizuj
+                                //double min = deviceStuff.freqAnalysis[loopId].Min();
+                                double max = deviceStuff.freqAnalysis[loopId].Max();
+
+                                // naubacuj
+                                foreach (double freq in deviceStuff.freqAnalysis[loopId])
+                                {
+                                    double freqNorm = max - freq;
+                                    seriesChart.Points.AddY(freqNorm);
+                                }
+
+                                // (re)draw
+                                destChart.Invalidate();
                             }
                         }
-                        */
+                        catch (Exception oh)
+                        {
+                            // parsing error happens because of uart->usb interface buffer overrun, so just die silently
+                            //Console.WriteLine("EXCEPTION PARSING");
+                            return;
+                        }
+
                     }
                     // device answered to our communicatino request?
                     else if(cmd.Contains("READY>v1"))
@@ -1542,7 +1617,6 @@ namespace config1v1
                             // logging is turned on
                             case "LOG>1\r\n":
                                 lblLoggingState.Text = lblLoggingState.Tag.ToString().Replace("%", "On");
-
                                 sendDataToDevice("Q"); // logging is ON, return to running mode
                                 break;
                             // logging is turned off
@@ -1550,12 +1624,13 @@ namespace config1v1
                                 lblLoggingState.Text = lblLoggingState.Tag.ToString().Replace("%", "Off");
                                 break;
                             // realtime freq analysis is turned on
-                            case "FREQ>1\r\n":
-                                MessageBox.Show("Realtime frequency analysis is now ON!");
+                            case "ANA>1\r\n":
+                                lblSignalAnalysis.Text = lblSignalAnalysis.Tag.ToString().Replace("%", "On");
+                                sendDataToDevice("Q"); // logging is ON, return to running mode
                                 break;
                             // realtime freq analysis is turned off
-                            case "FREQ>0\r\n":
-                                MessageBox.Show("Realtime frequency analysis is now OFF!");
+                            case "ANA>0\r\n":
+                                lblSignalAnalysis.Text = lblSignalAnalysis.Tag.ToString().Replace("%", "Off");
                                 break;
                             // resumed to normal operation
                             // quiting from comm mode
@@ -1950,6 +2025,11 @@ namespace config1v1
         private void btnClearLog_Click(object sender, EventArgs e)
         {
             txtLog.Clear();
+        }
+
+        private void btnSignalAnalysis_Click(object sender, EventArgs e)
+        {
+            sendDataToDevice("A");
         }
     }
 }
