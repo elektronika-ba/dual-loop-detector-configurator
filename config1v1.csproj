@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CirBuff.cs" />
     <Compile Include="customSerializer.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>

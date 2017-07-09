@@ -1442,79 +1442,24 @@ namespace config1v1
         {
             if (string.IsNullOrEmpty(cmd)) return;
 
+            Console.Write(cmd);
+
             // state machine
             switch (rxState)
             {
                 // at startup, we will assume that device is running
                 case TRXState.Running:
                     // here we can get some running data, such as event logging, realtime frequency as it changes. that is basically it
-                    // event
-                    if(cmd.StartsWith("EVENT["))
-                    {
-                        // ovdje smo dobili jedan event u formatu: EVENT[loop_id_ili_X]>EVENT_CODE,_optional_event_parameter_\r\n
-                        int loopId = extractLoopIdFromResponse(cmd);
-                        string paramVal = extractParamValueFromResponse(cmd);
-                        string ev = "";
-
-                        int eventId = -1;
-                        string eventParam = "";
-                        try
-                        {
-                            if (paramVal.Contains(","))
-                            {
-                                List<string> lis = new List<string>(paramVal.Split(','));
-                                eventId = int.Parse(lis[0]);
-                                eventParam = lis[1];
-                            }
-                            else
-                            {
-                                eventId = int.Parse(paramVal);
-                            }
-                        }
-                        catch(Exception)
-                        {
-                            // failed while parsing...
-                            //addToEventLog("Parsing exception!");
-                            return;
-                        }
-
-                        // unsupported event!?
-                        if (!EventName.ContainsKey(eventId)) return;
-
-                        ev = EventName[eventId];
-                        ev = ev.Replace("$", eventParam);
-
-                        // ako je dosao loop id -1, znaci da je event nije nije od nijedne petlje nego "spojeni event"
-                        if (loopId == -1)
-                        {
-                            lblLastJointEvent.Text = lblLastJointEvent.Tag.ToString().Replace("%", ev);
-                            // log to window
-                            addToEventLog(ev);
-                        }
-                        else if (loopId == 0)
-                        {
-                            lblLastEventLoopA.Text = lblLastEventLoopA.Tag.ToString().Replace("%", ev);
-                            // log to window
-                            addToEventLog(ev, "[LOOP A]");
-                        }
-                        else if (loopId == 1)
-                        {
-                            lblLastEventLoopB.Text = lblLastEventLoopB.Tag.ToString().Replace("%", ev);
-                            // log to window
-                            addToEventLog(ev, "[LOOP B]");
-                        }
-                    }
                     // realtime freq analysis
-                    else if(cmd.StartsWith("A["))
+                    if (cmd.Contains("A["))
                     {
-                        // A[id]>12.2122,12.2122,12.2122,-15.3212,-15.3213\r\n
+                        //Console.Write("OPET: ");
+                        //Console.Write(cmd);
+
+                        /*// A[id]>12.2122,12.2122,12.2122,-15.3212,-15.3213\r\n
                         int loopId = extractLoopIdFromResponse(cmd);
                         string paramVal = extractParamValueFromResponse(cmd);
-
-                        if (paramVal.Length <= 0) return;
-
-                        // IMPORTANT: there is a bug here somewhere, it does not parse LOOP B data for some reason. Sometimes!
-
+                   
                         try
                         {
                             if (loopId < 0 || loopId > 1)
@@ -1591,7 +1536,63 @@ namespace config1v1
                             //Console.WriteLine("EXCEPTION PARSING");
                             return;
                         }
+                        */
+                    }
+                    // event
+                    else if(cmd.StartsWith("EVENT["))
+                    {
+                        // ovdje smo dobili jedan event u formatu: EVENT[loop_id_ili_X]>EVENT_CODE,_optional_event_parameter_\r\n
+                        int loopId = extractLoopIdFromResponse(cmd);
+                        string paramVal = extractParamValueFromResponse(cmd);
+                        string ev = "";
 
+                        int eventId = -1;
+                        string eventParam = "";
+                        try
+                        {
+                            if (paramVal.Contains(","))
+                            {
+                                List<string> lis = new List<string>(paramVal.Split(','));
+                                eventId = int.Parse(lis[0]);
+                                eventParam = lis[1];
+                            }
+                            else
+                            {
+                                eventId = int.Parse(paramVal);
+                            }
+                        }
+                        catch(Exception)
+                        {
+                            // failed while parsing...
+                            //addToEventLog("Parsing exception!");
+                            return;
+                        }
+
+                        // unsupported event!?
+                        if (!EventName.ContainsKey(eventId)) return;
+
+                        ev = EventName[eventId];
+                        ev = ev.Replace("$", eventParam);
+
+                        // ako je dosao loop id -1, znaci da je event nije nije od nijedne petlje nego "spojeni event"
+                        if (loopId == -1)
+                        {
+                            lblLastJointEvent.Text = lblLastJointEvent.Tag.ToString().Replace("%", ev);
+                            // log to window
+                            addToEventLog(ev);
+                        }
+                        else if (loopId == 0)
+                        {
+                            lblLastEventLoopA.Text = lblLastEventLoopA.Tag.ToString().Replace("%", ev);
+                            // log to window
+                            addToEventLog(ev, "[LOOP A]");
+                        }
+                        else if (loopId == 1)
+                        {
+                            lblLastEventLoopB.Text = lblLastEventLoopB.Tag.ToString().Replace("%", ev);
+                            // log to window
+                            addToEventLog(ev, "[LOOP B]");
+                        }
                     }
                     // device answered to our communicatino request?
                     else if(cmd.Contains("READY>v1"))
