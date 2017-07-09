@@ -1372,8 +1372,10 @@ namespace config1v1
             }
         }
 
+        private List<byte> spData = new List<byte>();
         private void sp_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
+            /*
             // https://code.msdn.microsoft.com/windowsdesktop/SerialPort-brief-Example-ac0d5004
 
             //Initialize a buffer to hold the received data 
@@ -1387,6 +1389,43 @@ namespace config1v1
             // we need to parse stuff in main ui thread, not here, so we will use TaskFactory to signal main thread to do the job
             // https://stackoverflow.com/a/14129252
             var task = uiFactory.StartNew(() => workCommandsFromRxDataBuffer());
+            */
+
+            // https://stackoverflow.com/a/15124287
+            while (sp.BytesToRead > 0)
+            {
+                var count = sp.BytesToRead;
+                var bytes = new byte[count];
+                sp.Read(bytes, 0, count);
+                spProcessBytes(bytes);
+            }
+        }
+
+        private void spProcessBytes(byte[] bytes)
+        {
+            spData.AddRange(bytes);
+
+            // convert array of bytes to string
+            string cmds = System.Text.Encoding.ASCII.GetString(spData.ToArray<byte>(), 0, spData.Count());
+            
+            // while there is a full command available in buffer
+            while (cmds.Contains(commandTerminator))
+            {
+                int eoc = cmds.IndexOf(commandTerminator);
+                List<byte> oneCommand = spData.GetRange(0, eoc);
+
+                // convert to string
+                string cmd = System.Text.Encoding.ASCII.GetString(oneCommand.ToArray<byte>(), 0, oneCommand.Count());
+
+                // remove from buffer
+                spData.RemoveRange(0, eoc + commandTerminator.Length);
+
+                // ucitaj cmd
+                var task = uiFactory.StartNew(() => processCommand(cmd));
+
+                // next
+                cmds = System.Text.Encoding.ASCII.GetString(spData.ToArray<byte>(), 0, spData.Count());
+            }
         }
 
         /**
@@ -1442,8 +1481,6 @@ namespace config1v1
         {
             if (string.IsNullOrEmpty(cmd)) return;
 
-            Console.Write(cmd);
-
             // state machine
             switch (rxState)
             {
@@ -1453,10 +1490,7 @@ namespace config1v1
                     // realtime freq analysis
                     if (cmd.Contains("A["))
                     {
-                        //Console.Write("OPET: ");
-                        //Console.Write(cmd);
-
-                        /*// A[id]>12.2122,12.2122,12.2122,-15.3212,-15.3213\r\n
+                        // A[id]>12.2122,12.2122,12.2122,-15.3212,-15.3213\r\n
                         int loopId = extractLoopIdFromResponse(cmd);
                         string paramVal = extractParamValueFromResponse(cmd);
                    
@@ -1536,7 +1570,6 @@ namespace config1v1
                             //Console.WriteLine("EXCEPTION PARSING");
                             return;
                         }
-                        */
                     }
                     // event
                     else if(cmd.StartsWith("EVENT["))
