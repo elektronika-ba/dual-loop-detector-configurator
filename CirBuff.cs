@@ -29,6 +29,16 @@ namespace config1v1
             index = 0;
         }
 
+        /*
+        public List<T> ToList(int fromIndex, int howMuch)
+        {
+            List<T> r = new List<T>();
+            T[] buffCopy = new T[buff.Length];
+            buff.CopyTo(buffCopy, 0);
+            return r;
+        }
+        */
+
         public int GetIndexAfterMove(int howMuch)
         {
             if (Math.Abs(howMuch) >= buff.Length)

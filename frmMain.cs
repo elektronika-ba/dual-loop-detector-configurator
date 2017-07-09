@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
+using System.IO;
 
 namespace config1v1
 {
@@ -25,6 +26,8 @@ namespace config1v1
         private List<byte> spData = new List<byte>();
         private const string commandTerminator = "END>\r\n";
         private const string crlf = "\r\n";
+
+        private string saveAnalysisFolder = "";
 
         private enum TRXState
         {
@@ -113,9 +116,9 @@ namespace config1v1
                 err = new List<int>(2);
                 lastEvent = new List<string>(2);
                 dips = new List<byte>(2);
-                freqAnalysis = new List<List<double>>(2);
                 freqAna = new List<CirBuff<double>>(2);
                 detectState = new List<bool>(2);
+                freqAna4Save = new List<List<double>>(2);
                 for (int i = 0; i < 2; i++)
                 {
                     freq.Add(0.0);
@@ -123,8 +126,8 @@ namespace config1v1
                     lastEvent.Add("");
                     dips.Add(0x00);
                     detectState.Add(false);
-                    freqAnalysis.Add(new List<double>());
                     freqAna.Add(new CirBuff<double>(FREQ_ANA_BUFFER_SIZE));
+                    freqAna4Save.Add(new List<double>());
                 }
                 mode = -1;
             }
@@ -133,9 +136,9 @@ namespace config1v1
             public List<string> lastEvent { get; set; }
             public int mode { get; set; }
             public List<byte> dips { get; set; }
-            public List<List<double>> freqAnalysis { get; set; }
             public List<bool> detectState { get; set; }
             public List<CirBuff<double>> freqAna { get; set; }
+            public List<List<double>> freqAna4Save { get; set; }
         };
 
         private TDeviceStuff deviceStuff = new TDeviceStuff();
@@ -1493,10 +1496,12 @@ namespace config1v1
                                 freqAna.SetIndex(dataStartIndex);
 
                                 // select chart to draw
+                                CheckBox ckToSave = ckAutoSaveAnalysisLoopA;
                                 System.Windows.Forms.DataVisualization.Charting.Chart destChart = chAnalysisLoopA;
                                 if (loopId == 1)
                                 {
                                     destChart = chAnalysisLoopB;
+                                    ckToSave = ckAutoSaveAnalysisLoopB;
                                 }
                                 destChart.Series.Clear();
                                 var seriesChart = new System.Windows.Forms.DataVisualization.Charting.Series
@@ -1538,9 +1543,21 @@ namespace config1v1
                                 }
 
                                 // naubacuj sad u chart series, usput invertuj
+                                // takodje snimaj u globalnu var da mozemo uraditi SAVE po potrebi
+                                deviceStuff.freqAna4Save[loopId].Clear();
                                 foreach (double freq in normalized)
                                 {
                                     seriesChart.Points.AddY(maxNorm - freq);
+                                    deviceStuff.freqAna4Save[loopId].Add(maxNorm - freq);
+                                }
+
+                                // save to file if required
+                                if(ckToSave.Checked)
+                                {
+                                    if(!SaveAnalysisToFile(deviceStuff.freqAna4Save[loopId], saveAnalysisFolder, "Loop_" + loopId + "_" + DateTime.Now.ToString("yyyy-MM-dd-H-mm-ss") + ".txt"))
+                                    {
+                                        ckToSave.Checked = false;
+                                    }
                                 }
 
                                 // (re)draw
@@ -1549,70 +1566,6 @@ namespace config1v1
                                 // restore index, just in case it gets important to continue adding samplest from the same position
                                 freqAna.SetIndex(backupIndex);
                             }
-
-                            /*
-                            bool newDetectState = double.Parse(ar[ar.Count - 1]) >= 0; // if last one is positive, then we have a detection, else we dont have a detection
-
-                            // time to start fetching?
-                            if (newDetectState)
-                            {
-                                // first sample with detection-state?
-                                if (!deviceStuff.detectState[loopId])
-                                {
-                                    deviceStuff.freqAnalysis[loopId].Clear();
-                                }
-                                deviceStuff.detectState[loopId] = true;
-
-                                // add samples into buffer (absolute values)
-                                ar.ForEach(i =>
-                                {
-                                    double xy = double.Parse(i);
-                                    deviceStuff.freqAnalysis[loopId].Add(Math.Abs(xy));
-                                });
-                            }
-
-                            // time to end fetching?
-                            if (deviceStuff.detectState[loopId] && !newDetectState)
-                            {
-                                deviceStuff.detectState[loopId] = false;
-
-                                // plotaj!
-
-                                System.Windows.Forms.DataVisualization.Charting.Chart destChart = chAnalysisLoopA;
-                                if(loopId == 1)
-                                {
-                                    destChart = chAnalysisLoopB;
-                                }
-
-                                destChart.Series.Clear();
-                                var seriesChart = new System.Windows.Forms.DataVisualization.Charting.Series
-                                {
-                                    Name = "Signal over time",
-                                    Color = System.Drawing.Color.Green,
-                                    BorderWidth = 2,
-                                    IsVisibleInLegend = false,
-                                    IsXValueIndexed = true,
-                                    YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double,
-                                    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
-                                };
-
-                                destChart.Series.Add(seriesChart);
-
-                                // normalizuj
-                                //double min = deviceStuff.freqAnalysis[loopId].Min();
-                                double max = deviceStuff.freqAnalysis[loopId].Max();
-
-                                // naubacuj
-                                foreach (double freq in deviceStuff.freqAnalysis[loopId])
-                                {
-                                    double freqNorm = max - freq;
-                                    seriesChart.Points.AddY(freqNorm);
-                                }
-
-                                // (re)draw
-                                destChart.Invalidate();
-                            }
-                            */
                         }
                         catch (Exception oh)
                         {
@@ -2140,6 +2093,68 @@ namespace config1v1
             {
                 sp.Close();
             }
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("For more information please visit:\r\n\r\nwww.elektronika.ba", "About");
+        }
+
+        private bool SaveAnalysisToFile(List<double> analysisData, string path, string filename)
+        {
+            // need to ask user for input?
+            if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(filename) || !Directory.Exists(path))
+            {
+                DialogResult dr = saveAnalysisDialog.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    string fn = saveAnalysisDialog.FileName;
+                    if (string.IsNullOrEmpty(fn))
+                    {
+                        MessageBox.Show("This is not a valid file!", "File error");
+                        return false;
+                    }
+
+                    if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
+                    {
+                        path = Path.GetDirectoryName(fn);
+                    }
+
+                    if(string.IsNullOrEmpty(filename))
+                    {
+                        filename = Path.GetFileName(fn);
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            // save global path
+            saveAnalysisFolder = path;
+
+            // save to file
+            string fullFileName = Path.Combine(path, filename);
+            using (StreamWriter file = new StreamWriter(fullFileName))
+            {
+                foreach(double freq in analysisData)
+                {
+                    file.WriteLine(freq.ToString("0.0000"));
+                }
+            }
+
+            return true;
+        }
+
+        private void btnSaveAnalysisLoopA_Click(object sender, EventArgs e)
+        {
+            SaveAnalysisToFile(deviceStuff.freqAna4Save[0], saveAnalysisFolder, null);
+        }
+
+        private void btnSaveAnalysisLoopB_Click(object sender, EventArgs e)
+        {
+            SaveAnalysisToFile(deviceStuff.freqAna4Save[1], saveAnalysisFolder, null);
         }
     }
 }
