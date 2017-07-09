@@ -64,6 +64,11 @@ namespace config1v1
             index = 0;
         }
 
+        public void SetIndex(int newIndex)
+        {
+            index = newIndex;
+        }
+
         public int GetCurrentIndex()
         {
             return index;
@@ -107,6 +112,10 @@ namespace config1v1
             T item = buff[atIndex ?? GetCurrentIndex()];
             if (advance)
             {
+                if (atIndex != null)
+                {
+                    index = (int)atIndex;
+                }
                 MoveIndex(1);
             }
             return item;

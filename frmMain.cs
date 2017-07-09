@@ -20,8 +20,9 @@ namespace config1v1
         const int _UART_COMM_MODE_ENTER_DELAY_MS = 3000; // 3 seconds max wait for entering into comm uart mode
         const char _UART_START_CHAR = (char)26;	// 26 = CTRL+Z
         const int EE_SIZE = 95; // 95 bytes, *2 in hexa
+        const int FREQ_ANA_BUFFER_SIZE = 4096;
 
-        private string rxDataBuff = "";
+        private List<byte> spData = new List<byte>();
         private const string commandTerminator = "END>\r\n";
         private const string crlf = "\r\n";
 
@@ -113,6 +114,7 @@ namespace config1v1
                 lastEvent = new List<string>(2);
                 dips = new List<byte>(2);
                 freqAnalysis = new List<List<double>>(2);
+                freqAna = new List<CirBuff<double>>(2);
                 detectState = new List<bool>(2);
                 for (int i = 0; i < 2; i++)
                 {
@@ -122,6 +124,7 @@ namespace config1v1
                     dips.Add(0x00);
                     detectState.Add(false);
                     freqAnalysis.Add(new List<double>());
+                    freqAna.Add(new CirBuff<double>(FREQ_ANA_BUFFER_SIZE));
                 }
                 mode = -1;
             }
@@ -132,6 +135,7 @@ namespace config1v1
             public List<byte> dips { get; set; }
             public List<List<double>> freqAnalysis { get; set; }
             public List<bool> detectState { get; set; }
+            public List<CirBuff<double>> freqAna { get; set; }
         };
 
         private TDeviceStuff deviceStuff = new TDeviceStuff();
@@ -668,6 +672,7 @@ namespace config1v1
                 Color = System.Drawing.Color.Green,
                 IsVisibleInLegend = false,
                 IsXValueIndexed = true,
+                BorderWidth = 3,
                 ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
             };
 
@@ -1340,7 +1345,7 @@ namespace config1v1
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string cs = "";
-            rxDataBuff = ""; // flush buffer for new session
+            spData.Clear();
             rxState = TRXState.Running; // reset to this
             try
             {
@@ -1372,25 +1377,8 @@ namespace config1v1
             }
         }
 
-        private List<byte> spData = new List<byte>();
         private void sp_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            /*
-            // https://code.msdn.microsoft.com/windowsdesktop/SerialPort-brief-Example-ac0d5004
-
-            //Initialize a buffer to hold the received data 
-            byte[] buffer = new byte[sp.ReadBufferSize];
-
-            //There is no accurate method for checking how many bytes are read 
-            //unless you check the return from the Read method 
-            int bytesRead = sp.Read(buffer, 0, buffer.Length);
-            rxDataBuff += System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead);
-
-            // we need to parse stuff in main ui thread, not here, so we will use TaskFactory to signal main thread to do the job
-            // https://stackoverflow.com/a/14129252
-            var task = uiFactory.StartNew(() => workCommandsFromRxDataBuffer());
-            */
-
             // https://stackoverflow.com/a/15124287
             while (sp.BytesToRead > 0)
             {
@@ -1428,41 +1416,6 @@ namespace config1v1
             }
         }
 
-        /**
-         * Parsing received data from serial port/device.
-         * Something was received, and is appended to global rxDataBuff variable.
-         **/
-        private bool workCommandsFromRxDataBuffer()
-        {
-            // incomplete command in buffer! (we are expecting to see END>\r\n as a "command terminator"
-            if (!rxDataBuff.Contains(commandTerminator)) return false; // nothing currently/more pending for processing
-
-            List<string> commands = new List<string>();
-            do
-            {
-                // extract all commands into list
-                string[] temp = rxDataBuff.Split(new string[] { commandTerminator }, StringSplitOptions.RemoveEmptyEntries);
-                commands = new List<string>(temp);
-
-                // fetch first command from buffer
-                string cmd = "";
-                if (commands.Count > 0)
-                {
-                    cmd = commands[0];
-                    // remove it from the list
-                    commands.RemoveAt(0);
-                }
-
-                // reconstruct the buffer without it
-                rxDataBuff = String.Join(commandTerminator, commands);
-
-                // process received command!
-                processCommand(cmd);
-            } while (commands.Count > 0);
-
-            return true;
-        }
-
         private void addToEventLog(string txt, string prependTxt = "", bool useTimeStamp = true)
         {
             if (!string.IsNullOrEmpty(prependTxt))
@@ -1488,12 +1441,12 @@ namespace config1v1
                 case TRXState.Running:
                     // here we can get some running data, such as event logging, realtime frequency as it changes. that is basically it
                     // realtime freq analysis
-                    if (cmd.Contains("A["))
+                    if (cmd.StartsWith("A["))
                     {
                         // A[id]>12.2122,12.2122,12.2122,-15.3212,-15.3213\r\n
                         int loopId = extractLoopIdFromResponse(cmd);
                         string paramVal = extractParamValueFromResponse(cmd);
-                   
+
                         try
                         {
                             if (loopId < 0 || loopId > 1)
@@ -1501,7 +1454,103 @@ namespace config1v1
                                 throw new Exception();
                             }
 
+                            CirBuff<double> freqAna = deviceStuff.freqAna[loopId];
+
                             List<string> ar = new List<string>(paramVal.Split(','));
+                            bool newDetectState = false;
+                            // add all items to our circular buffer
+                            ar.ForEach(i =>
+                            {
+                                double fre = double.Parse(i);
+                                // see if there is a positive element in array
+                                if (fre > 0)
+                                {
+                                    newDetectState = true;
+                                }
+                                freqAna.Add(fre);
+                            });
+
+                            // if detection has been found, and not already before
+                            if (newDetectState && !deviceStuff.detectState[loopId])
+                            {
+                                deviceStuff.detectState[loopId] = true;
+
+                                // put marker somewhere here
+                                freqAna.MarkerPush();
+                            }
+                            // if there was a detection, but not anymore, fetch previous marker and start plotting
+                            else if(!newDetectState && deviceStuff.detectState[loopId])
+                            {
+                                deviceStuff.detectState[loopId] = false;
+
+                                // save current data index, so we can restore it after moving it around
+                                int backupIndex = freqAna.GetCurrentIndex();
+
+                                int dataStartIndex = freqAna.MarkerPop();
+                                dataStartIndex -= 20; // take previous N samples as well
+
+                                // move buffer to marker index
+                                freqAna.SetIndex(dataStartIndex);
+
+                                // select chart to draw
+                                System.Windows.Forms.DataVisualization.Charting.Chart destChart = chAnalysisLoopA;
+                                if (loopId == 1)
+                                {
+                                    destChart = chAnalysisLoopB;
+                                }
+                                destChart.Series.Clear();
+                                var seriesChart = new System.Windows.Forms.DataVisualization.Charting.Series
+                                {
+                                    Name = "Signal over time",
+                                    Color = System.Drawing.Color.Green,
+                                    BorderWidth = 2,
+                                    IsVisibleInLegend = false,
+                                    IsXValueIndexed = true,
+                                    YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double,
+                                    ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+                                };
+                                destChart.Series.Add(seriesChart);
+
+                                List<double> data4chart = new List<double>();
+                                double max = 0;
+                                // fetch data from marker index, to backupIndex
+                                while (freqAna.GetCurrentIndex() != backupIndex)
+                                {
+                                    double absVal = Math.Abs(freqAna.GetItem());
+                                    data4chart.Add(absVal);
+                                    if(absVal > max)
+                                    {
+                                        max = absVal;
+                                    }
+                                }
+
+                                // normalizuj
+                                List<double> normalized = new List<double>();
+                                double maxNorm = 0;
+                                foreach (double freq in data4chart)
+                                {
+                                    double normVal = max - freq;
+                                    normalized.Add(normVal);
+                                    if(normVal > maxNorm)
+                                    {
+                                        maxNorm = normVal;
+                                    }
+                                }
+
+                                // naubacuj sad u chart series, usput invertuj
+                                foreach (double freq in normalized)
+                                {
+                                    seriesChart.Points.AddY(maxNorm - freq);
+                                }
+
+                                // (re)draw
+                                destChart.Invalidate();
+
+                                // restore index, just in case it gets important to continue adding samplest from the same position
+                                freqAna.SetIndex(backupIndex);
+                            }
+
+                            /*
                             bool newDetectState = double.Parse(ar[ar.Count - 1]) >= 0; // if last one is positive, then we have a detection, else we dont have a detection
 
                             // time to start fetching?
@@ -1563,6 +1612,7 @@ namespace config1v1
                                 // (re)draw
                                 destChart.Invalidate();
                             }
+                            */
                         }
                         catch (Exception oh)
                         {
@@ -2064,6 +2114,32 @@ namespace config1v1
         private void btnSignalAnalysis_Click(object sender, EventArgs e)
         {
             sendDataToDevice("A");
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(MessageBox.Show("Are sure you want to close the application?", "Close", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                e.Cancel = false;
+            }
+            else
+            {
+                e.Cancel = true;
+                this.Activate();
+            }
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if(sp.IsOpen)
+            {
+                sp.Close();
+            }
         }
     }
 }
