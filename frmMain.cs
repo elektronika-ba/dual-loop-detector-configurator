@@ -2156,5 +2156,24 @@ namespace config1v1
         {
             SaveAnalysisToFile(deviceStuff.freqAna4Save[1], saveAnalysisFolder, null);
         }
+
+        private void chAnalysisLoopA_DoubleClick(object sender, EventArgs e)
+        {
+            DialogResult dr = saveChartImageDialog.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                chAnalysisLoopA.SaveImage(saveChartImageDialog.FileName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Jpeg);
+            }
+        }
+
+        private void chAnalysisLoopB_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = saveChartImageDialog.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                chAnalysisLoopB.SaveImage(saveChartImageDialog.FileName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Jpeg);
+            }
+
+        }
     }
 }

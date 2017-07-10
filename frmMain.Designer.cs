@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lbMenu = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -213,6 +213,7 @@
             this.btnSignalAnalysis = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
             this.saveAnalysisDialog = new System.Windows.Forms.SaveFileDialog();
+            this.saveChartImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -962,10 +963,10 @@
             this.chartFreqVsSens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.Name = "ChartArea1";
-            this.chartFreqVsSens.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartFreqVsSens.Legends.Add(legend4);
+            chartArea1.Name = "ChartArea1";
+            this.chartFreqVsSens.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartFreqVsSens.Legends.Add(legend1);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
             this.chartFreqVsSens.Size = new System.Drawing.Size(426, 456);
@@ -2224,37 +2225,39 @@
             // 
             this.chAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea5.Name = "ChartArea1";
-            this.chAnalysisLoopB.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chAnalysisLoopB.Legends.Add(legend5);
+            chartArea2.Name = "ChartArea1";
+            this.chAnalysisLoopB.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chAnalysisLoopB.Legends.Add(legend2);
             this.chAnalysisLoopB.Location = new System.Drawing.Point(6, 352);
             this.chAnalysisLoopB.Name = "chAnalysisLoopB";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chAnalysisLoopB.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chAnalysisLoopB.Series.Add(series1);
             this.chAnalysisLoopB.Size = new System.Drawing.Size(710, 241);
             this.chAnalysisLoopB.TabIndex = 14;
             this.chAnalysisLoopB.Text = "LOOP B";
+            this.chAnalysisLoopB.Click += new System.EventHandler(this.chAnalysisLoopB_Click);
             // 
             // chAnalysisLoopA
             // 
             this.chAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea6.Name = "ChartArea1";
-            this.chAnalysisLoopA.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chAnalysisLoopA.Legends.Add(legend6);
+            chartArea3.Name = "ChartArea1";
+            this.chAnalysisLoopA.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chAnalysisLoopA.Legends.Add(legend3);
             this.chAnalysisLoopA.Location = new System.Drawing.Point(6, 67);
             this.chAnalysisLoopA.Name = "chAnalysisLoopA";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chAnalysisLoopA.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chAnalysisLoopA.Series.Add(series2);
             this.chAnalysisLoopA.Size = new System.Drawing.Size(710, 241);
             this.chAnalysisLoopA.TabIndex = 13;
             this.chAnalysisLoopA.Text = "LOOP A";
+            this.chAnalysisLoopA.DoubleClick += new System.EventHandler(this.chAnalysisLoopA_DoubleClick);
             // 
             // lblSignalAnalysis
             // 
@@ -2294,6 +2297,11 @@
             // 
             this.saveAnalysisDialog.DefaultExt = "txt";
             this.saveAnalysisDialog.Filter = "Text File|*.txt";
+            // 
+            // saveChartImageDialog
+            // 
+            this.saveChartImageDialog.DefaultExt = "jpg";
+            this.saveChartImageDialog.Filter = "Images|*.jpg";
             // 
             // frmMain
             // 
@@ -2550,6 +2558,7 @@
         private System.Windows.Forms.CheckBox ckAutoSaveAnalysisLoopB;
         private System.Windows.Forms.CheckBox ckAutoSaveAnalysisLoopA;
         private System.Windows.Forms.SaveFileDialog saveAnalysisDialog;
+        private System.Windows.Forms.SaveFileDialog saveChartImageDialog;
     }
 }
 
