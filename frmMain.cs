@@ -599,7 +599,7 @@ namespace config1v1
                 // single loop
                 { "0", new List<string>() { "Mode 1", "Mode 2", "Reserved", "Alternative oscillator frequency", "Additional signal filtering", "Fail Safe", "ASB", "Detect Stop on relay A" } },
                 // dual independent
-                { "1", new List<string>() { "Mode 1", "Mode 2", "Reserved", "Alternative oscillator frequency for loop A", "Alternative oscillator frequency for loop B", "Additional signal filtering for loop A and B", "ASB for loop A and B", "PPC 2 for loop A and B" } },
+                { "1", new List<string>() { "Mode 1", "Mode 2", "Reserved", "Alternative oscillator frequency for loop A", "Alternative oscillator frequency for loop B", "Additional signal filtering for loop A and B", "ASB for loop A and B", "PPC (max) for loop A and B" } },
                 // dual directional
                 { "2", new List<string>() { "Mode 1", "Mode 2", "Reserved", "Alternative oscillator frequency for loop A", "Alternative oscillator frequency for loop B", "Additional signal filtering for loop A and B", "ASB for loop A and B", "Extended pulse for relay A and B" } },
                 // speed trap
@@ -609,7 +609,7 @@ namespace config1v1
             Dictionary<string, List<string>> DIP2texts = new Dictionary<string, List<string>>()
             {
                 // single loop
-                { "0", new List<string>() { "Relay A presence type", "Relay A extended pulse", "Relay A pulse on detect", "Relay B presence type", "Relay B extended pulse", "Relay B pulse on detect", "PPC 1", "PPC 2" } },
+                { "0", new List<string>() { "Relay A presence type", "Relay A extended pulse", "Relay A pulse on detect", "Relay B presence type", "Relay B extended pulse", "Relay B pulse on detect", "PPC 7", "PPC 8" } },
                 // dual independent
                 { "1", new List<string>() { "Detect Stop for loop A", "Detect Stop for loop B", "Fail Safe for loop A", "Fail Safe for loop B", "Relay A presence type", "Relay B presence type", "Extended pulse for relay A and relay B", "Pulse on detect for relay A and relay B" } },
                 // dual directional
@@ -2174,6 +2174,20 @@ namespace config1v1
                 chAnalysisLoopB.SaveImage(saveChartImageDialog.FileName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Jpeg);
             }
 
+        }
+
+        private void btnSaveLog_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = saveLogDialog.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                // save to file
+                string fullFileName = saveLogDialog.FileName;
+                using (StreamWriter file = new StreamWriter(fullFileName))
+                {
+                    file.Write(txtLog.Text);
+                }
+            }
         }
     }
 }

@@ -214,6 +214,8 @@
             this.label30 = new System.Windows.Forms.Label();
             this.saveAnalysisDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveChartImageDialog = new System.Windows.Forms.SaveFileDialog();
+            this.btnSaveLog = new System.Windows.Forms.Button();
+            this.saveLogDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -951,10 +953,9 @@
             this.panel1.Controls.Add(this.uctbSamplingSpeed);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(224, 49);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(728, 639);
+            this.panel1.Size = new System.Drawing.Size(547, 629);
             this.panel1.TabIndex = 6;
             this.panel1.Tag = "1";
             // 
@@ -969,7 +970,7 @@
             this.chartFreqVsSens.Legends.Add(legend1);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
-            this.chartFreqVsSens.Size = new System.Drawing.Size(426, 456);
+            this.chartFreqVsSens.Size = new System.Drawing.Size(245, 446);
             this.chartFreqVsSens.TabIndex = 10;
             this.chartFreqVsSens.Text = "Frequency vs Sensitivity";
             // 
@@ -1004,7 +1005,7 @@
             this.tblSensitivityExamples.ShowCellErrors = false;
             this.tblSensitivityExamples.ShowEditingIcon = false;
             this.tblSensitivityExamples.ShowRowErrors = false;
-            this.tblSensitivityExamples.Size = new System.Drawing.Size(275, 455);
+            this.tblSensitivityExamples.Size = new System.Drawing.Size(275, 445);
             this.tblSensitivityExamples.TabIndex = 8;
             // 
             // Frequency
@@ -1038,7 +1039,7 @@
             this.uctbSamplingSpeed.Maximum = 50000;
             this.uctbSamplingSpeed.Minimum = 30000;
             this.uctbSamplingSpeed.Name = "uctbSamplingSpeed";
-            this.uctbSamplingSpeed.Size = new System.Drawing.Size(709, 71);
+            this.uctbSamplingSpeed.Size = new System.Drawing.Size(528, 71);
             this.uctbSamplingSpeed.SmallChange = 10;
             this.uctbSamplingSpeed.TabIndex = 6;
             this.uctbSamplingSpeed.Tag = "UPDATE_CONFIG_PACKET";
@@ -1063,7 +1064,7 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(728, 27);
+            this.label3.Size = new System.Drawing.Size(547, 27);
             this.label3.TabIndex = 3;
             this.label3.Tag = "title";
             this.label3.Text = "sampling speed";
@@ -2043,6 +2044,7 @@
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.btnSaveLog);
             this.panel9.Controls.Add(this.btnClearLog);
             this.panel9.Controls.Add(this.label29);
             this.panel9.Controls.Add(this.txtLog);
@@ -2052,16 +2054,17 @@
             this.panel9.Controls.Add(this.lblLoggingState);
             this.panel9.Controls.Add(this.button1);
             this.panel9.Controls.Add(this.label28);
-            this.panel9.Location = new System.Drawing.Point(768, 52);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(224, 49);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(171, 444);
+            this.panel9.Size = new System.Drawing.Size(728, 639);
             this.panel9.TabIndex = 14;
             this.panel9.Tag = "9";
             // 
             // btnClearLog
             // 
             this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearLog.Location = new System.Drawing.Point(73, 408);
+            this.btnClearLog.Location = new System.Drawing.Point(630, 603);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(85, 23);
             this.btnClearLog.TabIndex = 16;
@@ -2088,7 +2091,7 @@
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(150, 247);
+            this.txtLog.Size = new System.Drawing.Size(707, 442);
             this.txtLog.TabIndex = 14;
             this.txtLog.WordWrap = false;
             // 
@@ -2153,7 +2156,7 @@
             this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label28.Location = new System.Drawing.Point(0, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(171, 27);
+            this.label28.Size = new System.Drawing.Size(728, 27);
             this.label28.TabIndex = 8;
             this.label28.Tag = "title";
             this.label28.Text = "event viewer";
@@ -2170,10 +2173,9 @@
             this.panel10.Controls.Add(this.lblSignalAnalysis);
             this.panel10.Controls.Add(this.btnSignalAnalysis);
             this.panel10.Controls.Add(this.label30);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel10.Location = new System.Drawing.Point(224, 49);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(728, 639);
+            this.panel10.Size = new System.Drawing.Size(432, 629);
             this.panel10.TabIndex = 15;
             this.panel10.Tag = "10";
             // 
@@ -2181,7 +2183,7 @@
             // 
             this.ckAutoSaveAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ckAutoSaveAnalysisLoopB.AutoSize = true;
-            this.ckAutoSaveAnalysisLoopB.Location = new System.Drawing.Point(560, 603);
+            this.ckAutoSaveAnalysisLoopB.Location = new System.Drawing.Point(264, 603);
             this.ckAutoSaveAnalysisLoopB.Name = "ckAutoSaveAnalysisLoopB";
             this.ckAutoSaveAnalysisLoopB.Size = new System.Drawing.Size(74, 17);
             this.ckAutoSaveAnalysisLoopB.TabIndex = 18;
@@ -2192,7 +2194,7 @@
             // 
             this.ckAutoSaveAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ckAutoSaveAnalysisLoopA.AutoSize = true;
-            this.ckAutoSaveAnalysisLoopA.Location = new System.Drawing.Point(560, 318);
+            this.ckAutoSaveAnalysisLoopA.Location = new System.Drawing.Point(264, 318);
             this.ckAutoSaveAnalysisLoopA.Name = "ckAutoSaveAnalysisLoopA";
             this.ckAutoSaveAnalysisLoopA.Size = new System.Drawing.Size(74, 17);
             this.ckAutoSaveAnalysisLoopA.TabIndex = 17;
@@ -2202,7 +2204,7 @@
             // btnSaveAnalysisLoopB
             // 
             this.btnSaveAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveAnalysisLoopB.Location = new System.Drawing.Point(640, 599);
+            this.btnSaveAnalysisLoopB.Location = new System.Drawing.Point(344, 599);
             this.btnSaveAnalysisLoopB.Name = "btnSaveAnalysisLoopB";
             this.btnSaveAnalysisLoopB.Size = new System.Drawing.Size(75, 23);
             this.btnSaveAnalysisLoopB.TabIndex = 16;
@@ -2213,7 +2215,7 @@
             // btnSaveAnalysisLoopA
             // 
             this.btnSaveAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveAnalysisLoopA.Location = new System.Drawing.Point(640, 315);
+            this.btnSaveAnalysisLoopA.Location = new System.Drawing.Point(344, 315);
             this.btnSaveAnalysisLoopA.Name = "btnSaveAnalysisLoopA";
             this.btnSaveAnalysisLoopA.Size = new System.Drawing.Size(75, 23);
             this.btnSaveAnalysisLoopA.TabIndex = 15;
@@ -2235,7 +2237,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chAnalysisLoopB.Series.Add(series1);
-            this.chAnalysisLoopB.Size = new System.Drawing.Size(710, 241);
+            this.chAnalysisLoopB.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopB.TabIndex = 14;
             this.chAnalysisLoopB.Text = "LOOP B";
             this.chAnalysisLoopB.Click += new System.EventHandler(this.chAnalysisLoopB_Click);
@@ -2254,7 +2256,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chAnalysisLoopA.Series.Add(series2);
-            this.chAnalysisLoopA.Size = new System.Drawing.Size(710, 241);
+            this.chAnalysisLoopA.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopA.TabIndex = 13;
             this.chAnalysisLoopA.Text = "LOOP A";
             this.chAnalysisLoopA.DoubleClick += new System.EventHandler(this.chAnalysisLoopA_DoubleClick);
@@ -2275,7 +2277,7 @@
             this.btnSignalAnalysis.Name = "btnSignalAnalysis";
             this.btnSignalAnalysis.Size = new System.Drawing.Size(129, 23);
             this.btnSignalAnalysis.TabIndex = 11;
-            this.btnSignalAnalysis.Text = "Enable signal analysis";
+            this.btnSignalAnalysis.Text = "Signal analysis on/off";
             this.btnSignalAnalysis.UseVisualStyleBackColor = true;
             this.btnSignalAnalysis.Click += new System.EventHandler(this.btnSignalAnalysis_Click);
             // 
@@ -2287,7 +2289,7 @@
             this.label30.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label30.Location = new System.Drawing.Point(0, 0);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(728, 27);
+            this.label30.Size = new System.Drawing.Size(432, 27);
             this.label30.TabIndex = 10;
             this.label30.Tag = "title";
             this.label30.Text = "signal analysis";
@@ -2303,15 +2305,30 @@
             this.saveChartImageDialog.DefaultExt = "jpg";
             this.saveChartImageDialog.Filter = "Images|*.jpg";
             // 
+            // btnSaveLog
+            // 
+            this.btnSaveLog.Location = new System.Drawing.Point(539, 603);
+            this.btnSaveLog.Name = "btnSaveLog";
+            this.btnSaveLog.Size = new System.Drawing.Size(85, 23);
+            this.btnSaveLog.TabIndex = 17;
+            this.btnSaveLog.Text = "Save log";
+            this.btnSaveLog.UseVisualStyleBackColor = true;
+            this.btnSaveLog.Click += new System.EventHandler(this.btnSaveLog_Click);
+            // 
+            // saveLogDialog
+            // 
+            this.saveLogDialog.DefaultExt = "txt";
+            this.saveLogDialog.Filter = "Log file|*.txt";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 710);
+            this.Controls.Add(this.panel9);
             this.Controls.Add(this.panel10);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel9);
             this.Controls.Add(this.pnlOperatingMode);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
@@ -2323,10 +2340,11 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Dual Channel Vehicle Loop Detector - www.elektronika.ba";
+            this.Text = "Dual Channel Inductive Loop Vehicle Detector - www.elektronika.ba";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.Load += new System.EventHandler(this.frmMain_Load);
@@ -2559,6 +2577,8 @@
         private System.Windows.Forms.CheckBox ckAutoSaveAnalysisLoopA;
         private System.Windows.Forms.SaveFileDialog saveAnalysisDialog;
         private System.Windows.Forms.SaveFileDialog saveChartImageDialog;
+        private System.Windows.Forms.Button btnSaveLog;
+        private System.Windows.Forms.SaveFileDialog saveLogDialog;
     }
 }
 
