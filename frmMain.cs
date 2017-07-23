@@ -1020,7 +1020,7 @@ namespace config1v1
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Error reading profile file.");
+                    MessageBox.Show("Error reading profile file.", "Error");
                 }
             }
         }
@@ -1037,7 +1037,7 @@ namespace config1v1
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Error saving profile file.");
+                    MessageBox.Show("Error saving profile file.", "Error");
                 }
             }
         }
@@ -1213,7 +1213,7 @@ namespace config1v1
             }
             catch (Exception)
             {
-                MessageBox.Show("Error parsing data received from device!");
+                MessageBox.Show("Error parsing data received from device!", "Error");
                 return null;
             }
 
@@ -1225,7 +1225,7 @@ namespace config1v1
             // send GET command
             if(!sendDataToDevice("G"))
             {
-                MessageBox.Show("Failed to send command G to device. Please try again.");
+                MessageBox.Show("Failed to send command G to device. Please try again.", "Error");
             }
 
             // handling of reception of data is in receiver parser
@@ -1370,7 +1370,7 @@ namespace config1v1
             }
             catch(Exception)
             {
-                MessageBox.Show("Error accessing COM port (COM" + ConfigurationManager.AppSettings["comport‌​"] + "). Please check settings and try again.");
+                MessageBox.Show("Error accessing COM port (COM" + ConfigurationManager.AppSettings["comport‌​"] + "). Please check settings and try again.", "Error");
                 settingsToolStripMenuItem_Click(sender, e);
                 cs = "Connection error";
             }
@@ -1737,7 +1737,7 @@ namespace config1v1
                                     else if (cmd.Contains("FACTORY>"))
                                     {
                                         string paramVal = extractParamValueFromResponse(cmd);
-                                        MessageBox.Show("Device performed factory reset and answered with: " + paramVal);
+                                        MessageBox.Show("Device performed factory reset and answered with: " + paramVal, "Factory reset");
                                     }
                                     // response on startup DIPs query
                                     else if (cmd.Contains("DIPS["))
@@ -1777,7 +1777,7 @@ namespace config1v1
                                     // response on soft-reset
                                     else if (cmd.Contains("RESET>"))
                                     {
-                                        MessageBox.Show("Device accepted soft-restart command.");
+                                        MessageBox.Show("Device accepted soft-restart command.", "Soft-restart");
                                     }
                                     // response on communication quitting and communication exiting
                                     else if (cmd.Contains("QUIT>") || cmd.Contains("RESUME>"))
@@ -1798,7 +1798,7 @@ namespace config1v1
                                             // validate, EE_SIZE is expected
                                             if (eeSize != EE_SIZE)
                                             {
-                                                MessageBox.Show("Error in received configuration data. Number of bytes received is not correct (" + eeSize + "/" + EE_SIZE + ")!");
+                                                MessageBox.Show("Error in received configuration data. Number of bytes received is not correct (" + eeSize + "/" + EE_SIZE + ")!", "Error");
                                                 return;
                                             }
 
@@ -1813,7 +1813,7 @@ namespace config1v1
                                         }
                                         catch (Exception)
                                         {
-                                            MessageBox.Show("Error in received configuration data. Something is not right!");
+                                            MessageBox.Show("Error in received configuration data. Something is not right!", "Error");
                                         }
                                     }
                                     // response to our SET command
@@ -1833,7 +1833,7 @@ namespace config1v1
                                         }
                                         catch(Exception)
                                         {
-                                            MessageBox.Show("Error in attempting to send configuration data. Number of bytes device is expecting is not correct (" + eeSize + "/" + EE_SIZE + ")!");
+                                            MessageBox.Show("Error in attempting to send configuration data. Number of bytes device is expecting is not correct (" + eeSize + "/" + EE_SIZE + ")!", "Error");
                                             return;
                                         }
 
@@ -1891,7 +1891,7 @@ namespace config1v1
         {
             if(!sp.IsOpen)
             {
-                MessageBox.Show("Please first connect to device!");
+                MessageBox.Show("Please first connect to device!", "Communication error");
                 return false;
             }
 
