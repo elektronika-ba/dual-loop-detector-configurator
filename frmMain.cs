@@ -913,6 +913,11 @@ namespace config1v1
             info = info.Replace("%", sinfo);
 
             lblSpeedLoopDistance.Text = info;
+
+            // (re)start timer to (re)calculate maximum possible speed
+            tmrSpeedTrapErrorGenerator.Stop();
+            tmrSpeedTrapErrorGenerator.Start();
+            tmrSpeedTrapErrorGenerator.Enabled = true;
         }
 
         private void cbSensitivityA_SelectedIndexChanged(object sender, EventArgs e)
@@ -2187,6 +2192,48 @@ namespace config1v1
                 {
                     file.Write(txtLog.Text);
                 }
+            }
+        }
+
+        private void tmrSpeedTrapErrorGenerator_Tick(object sender, EventArgs e)
+        {
+            tmrSpeedTrapErrorGenerator.Enabled = false;
+            tblMaximumSpeedErrors.Rows.Clear();
+
+            double samplingSpeedSeconds = ((1.0 / _TMR1_FREQ) * uctbSamplingSpeed.Value);
+
+            int minMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (255.0 * samplingSpeedSeconds) / 1000.0 * 3600.0);
+            int maxMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (2.0 * samplingSpeedSeconds) / 1000.0 * 3600.0);
+            for (double speed = 10; speed <= maxMeasSpeed; speed += 10)
+            {
+                double timeForSpeedMs = (uctbSpeedDistance.Value / 100.0) / (speed * 1000.0 / 3600.0);
+
+                DataGridViewRow r = new DataGridViewRow();
+
+                DataGridViewTextBoxCell c1 = new DataGridViewTextBoxCell();
+                c1.Value = speed;
+                r.Cells.Add(c1);
+
+                double timeForSpeedWithMaxErrSec = timeForSpeedMs + (2.0 * samplingSpeedSeconds);
+                double speedWithMaxError = ((uctbSpeedDistance.Value / 100.0) / timeForSpeedWithMaxErrSec) / 1000.0 * 3600.0;
+
+                DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell();
+                c2.Value = speedWithMaxError.ToString("0.00");
+                r.Cells.Add(c2);
+
+                double errorKmh = speed - speedWithMaxError;
+
+                DataGridViewTextBoxCell c3 = new DataGridViewTextBoxCell();
+                c3.Value = errorKmh.ToString("0.00");
+                r.Cells.Add(c3);
+
+                double errorPercent = ((speed - speedWithMaxError) / speed * 100.0);
+
+                DataGridViewTextBoxCell c4 = new DataGridViewTextBoxCell();
+                c4.Value = errorPercent.ToString("0.00");
+                r.Cells.Add(c4);
+
+                tblMaximumSpeedErrors.Rows.Add(r);
             }
         }
     }

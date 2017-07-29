@@ -106,6 +106,7 @@
     <EmbeddedResource Include="ucTrackBar.resx">
       <DependentUpon>ucTrackBar.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="bin\Release\config1v1.exe.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -135,6 +136,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Release\config1v1.exe" />
+    <Content Include="bin\Release\config1v1.pdb" />
+    <Content Include="bin\Release\System.Configuration.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

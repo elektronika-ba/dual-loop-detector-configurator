@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend16 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lbMenu = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +107,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cbOperatingMode = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlSamplingSpeed = new System.Windows.Forms.Panel();
             this.chartFreqVsSens = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label5 = new System.Windows.Forms.Label();
             this.tblSensitivityExamples = new System.Windows.Forms.DataGridView();
@@ -118,7 +118,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tmrSensitivitiesExampleGenerator = new System.Windows.Forms.Timer(this.components);
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.pnlSensitivity = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.uctbSensitivityUndetectThresholdB = new config1v1.ucTrackBar();
@@ -185,14 +185,16 @@
             this.lblDCDDTimer = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.panel8 = new System.Windows.Forms.Panel();
+            this.pnlSpeedTrap = new System.Windows.Forms.Panel();
+            this.label31 = new System.Windows.Forms.Label();
+            this.tblMaximumSpeedErrors = new System.Windows.Forms.DataGridView();
             this.uctbSpeedDistance = new config1v1.ucTrackBar();
             this.lblSpeedLoopDistance = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.tmrUpdateConfigPacket = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.panel9 = new System.Windows.Forms.Panel();
+            this.pnlEventViewer = new System.Windows.Forms.Panel();
             this.btnSaveLog = new System.Windows.Forms.Button();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
@@ -203,7 +205,7 @@
             this.lblLoggingState = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label28 = new System.Windows.Forms.Label();
-            this.panel10 = new System.Windows.Forms.Panel();
+            this.pnlSignalAnalysis = new System.Windows.Forms.Panel();
             this.ckAutoSaveAnalysisLoopB = new System.Windows.Forms.CheckBox();
             this.ckAutoSaveAnalysisLoopA = new System.Windows.Forms.CheckBox();
             this.btnSaveAnalysisLoopB = new System.Windows.Forms.Button();
@@ -216,6 +218,11 @@
             this.saveAnalysisDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveChartImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveLogDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tmrSpeedTrapErrorGenerator = new System.Windows.Forms.Timer(this.components);
+            this.Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WorstPossibleMeasurement = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaximumErrorKMH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaximumErrorPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -223,10 +230,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gbDIP2.SuspendLayout();
             this.gbDIP1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnlSamplingSpeed.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartFreqVsSens)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblSensitivityExamples)).BeginInit();
-            this.panel2.SuspendLayout();
+            this.pnlSensitivity.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -237,9 +244,10 @@
             this.groupBox5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.panel8.SuspendLayout();
-            this.panel9.SuspendLayout();
-            this.panel10.SuspendLayout();
+            this.pnlSpeedTrap.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblMaximumSpeedErrors)).BeginInit();
+            this.pnlEventViewer.SuspendLayout();
+            this.pnlSignalAnalysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopA)).BeginInit();
             this.SuspendLayout();
@@ -944,33 +952,34 @@
             this.cbOperatingMode.TabIndex = 0;
             this.cbOperatingMode.SelectedIndexChanged += new System.EventHandler(this.cbOperatingMode_SelectedIndexChanged);
             // 
-            // panel1
+            // pnlSamplingSpeed
             // 
-            this.panel1.Controls.Add(this.chartFreqVsSens);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.tblSensitivityExamples);
-            this.panel1.Controls.Add(this.lblTmr1SamplingSpeed);
-            this.panel1.Controls.Add(this.uctbSamplingSpeed);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Location = new System.Drawing.Point(224, 49);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(547, 629);
-            this.panel1.TabIndex = 6;
-            this.panel1.Tag = "1";
+            this.pnlSamplingSpeed.Controls.Add(this.chartFreqVsSens);
+            this.pnlSamplingSpeed.Controls.Add(this.label5);
+            this.pnlSamplingSpeed.Controls.Add(this.tblSensitivityExamples);
+            this.pnlSamplingSpeed.Controls.Add(this.lblTmr1SamplingSpeed);
+            this.pnlSamplingSpeed.Controls.Add(this.uctbSamplingSpeed);
+            this.pnlSamplingSpeed.Controls.Add(this.label4);
+            this.pnlSamplingSpeed.Controls.Add(this.label3);
+            this.pnlSamplingSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlSamplingSpeed.Location = new System.Drawing.Point(224, 49);
+            this.pnlSamplingSpeed.Name = "pnlSamplingSpeed";
+            this.pnlSamplingSpeed.Size = new System.Drawing.Size(728, 639);
+            this.pnlSamplingSpeed.TabIndex = 6;
+            this.pnlSamplingSpeed.Tag = "1";
             // 
             // chartFreqVsSens
             // 
             this.chartFreqVsSens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.Name = "ChartArea1";
-            this.chartFreqVsSens.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartFreqVsSens.Legends.Add(legend4);
+            chartArea16.Name = "ChartArea1";
+            this.chartFreqVsSens.ChartAreas.Add(chartArea16);
+            legend16.Name = "Legend1";
+            this.chartFreqVsSens.Legends.Add(legend16);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
-            this.chartFreqVsSens.Size = new System.Drawing.Size(245, 446);
+            this.chartFreqVsSens.Size = new System.Drawing.Size(426, 456);
             this.chartFreqVsSens.TabIndex = 10;
             this.chartFreqVsSens.Text = "Frequency vs Sensitivity";
             // 
@@ -1005,7 +1014,7 @@
             this.tblSensitivityExamples.ShowCellErrors = false;
             this.tblSensitivityExamples.ShowEditingIcon = false;
             this.tblSensitivityExamples.ShowRowErrors = false;
-            this.tblSensitivityExamples.Size = new System.Drawing.Size(275, 445);
+            this.tblSensitivityExamples.Size = new System.Drawing.Size(275, 455);
             this.tblSensitivityExamples.TabIndex = 8;
             // 
             // Frequency
@@ -1039,7 +1048,7 @@
             this.uctbSamplingSpeed.Maximum = 50000;
             this.uctbSamplingSpeed.Minimum = 25500;
             this.uctbSamplingSpeed.Name = "uctbSamplingSpeed";
-            this.uctbSamplingSpeed.Size = new System.Drawing.Size(528, 71);
+            this.uctbSamplingSpeed.Size = new System.Drawing.Size(709, 71);
             this.uctbSamplingSpeed.SmallChange = 10;
             this.uctbSamplingSpeed.TabIndex = 6;
             this.uctbSamplingSpeed.Tag = "UPDATE_CONFIG_PACKET";
@@ -1064,7 +1073,7 @@
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(547, 27);
+            this.label3.Size = new System.Drawing.Size(728, 27);
             this.label3.TabIndex = 3;
             this.label3.Tag = "title";
             this.label3.Text = "sampling speed";
@@ -1075,17 +1084,18 @@
             this.tmrSensitivitiesExampleGenerator.Interval = 350;
             this.tmrSensitivitiesExampleGenerator.Tick += new System.EventHandler(this.tmrSensitivitiesExampleGenerator_Tick);
             // 
-            // panel2
+            // pnlSensitivity
             // 
-            this.panel2.Controls.Add(this.label16);
-            this.panel2.Controls.Add(this.groupBox2);
-            this.panel2.Controls.Add(this.groupBox1);
-            this.panel2.Controls.Add(this.label6);
-            this.panel2.Location = new System.Drawing.Point(588, 49);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(170, 135);
-            this.panel2.TabIndex = 7;
-            this.panel2.Tag = "2";
+            this.pnlSensitivity.Controls.Add(this.label16);
+            this.pnlSensitivity.Controls.Add(this.groupBox2);
+            this.pnlSensitivity.Controls.Add(this.groupBox1);
+            this.pnlSensitivity.Controls.Add(this.label6);
+            this.pnlSensitivity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlSensitivity.Location = new System.Drawing.Point(224, 49);
+            this.pnlSensitivity.Name = "pnlSensitivity";
+            this.pnlSensitivity.Size = new System.Drawing.Size(728, 639);
+            this.pnlSensitivity.TabIndex = 7;
+            this.pnlSensitivity.Tag = "2";
             // 
             // label16
             // 
@@ -1108,7 +1118,7 @@
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Location = new System.Drawing.Point(9, 260);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(149, 217);
+            this.groupBox2.Size = new System.Drawing.Size(707, 217);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Loop B";
@@ -1122,7 +1132,7 @@
             this.uctbSensitivityUndetectThresholdB.Maximum = 1000;
             this.uctbSensitivityUndetectThresholdB.Minimum = 1;
             this.uctbSensitivityUndetectThresholdB.Name = "uctbSensitivityUndetectThresholdB";
-            this.uctbSensitivityUndetectThresholdB.Size = new System.Drawing.Size(137, 60);
+            this.uctbSensitivityUndetectThresholdB.Size = new System.Drawing.Size(695, 60);
             this.uctbSensitivityUndetectThresholdB.SmallChange = 1;
             this.uctbSensitivityUndetectThresholdB.TabIndex = 6;
             this.uctbSensitivityUndetectThresholdB.Tag = "UPDATE_CONFIG_PACKET";
@@ -1147,7 +1157,7 @@
             this.uctbSensitivityDetectThresholdB.Maximum = 1000;
             this.uctbSensitivityDetectThresholdB.Minimum = 1;
             this.uctbSensitivityDetectThresholdB.Name = "uctbSensitivityDetectThresholdB";
-            this.uctbSensitivityDetectThresholdB.Size = new System.Drawing.Size(137, 60);
+            this.uctbSensitivityDetectThresholdB.Size = new System.Drawing.Size(695, 60);
             this.uctbSensitivityDetectThresholdB.SmallChange = 1;
             this.uctbSensitivityDetectThresholdB.TabIndex = 4;
             this.uctbSensitivityDetectThresholdB.Tag = "UPDATE_CONFIG_PACKET";
@@ -1204,7 +1214,7 @@
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Location = new System.Drawing.Point(9, 37);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(149, 217);
+            this.groupBox1.Size = new System.Drawing.Size(707, 217);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Loop A";
@@ -1218,7 +1228,7 @@
             this.uctbSensitivityUndetectThresholdA.Maximum = 1000;
             this.uctbSensitivityUndetectThresholdA.Minimum = 1;
             this.uctbSensitivityUndetectThresholdA.Name = "uctbSensitivityUndetectThresholdA";
-            this.uctbSensitivityUndetectThresholdA.Size = new System.Drawing.Size(137, 60);
+            this.uctbSensitivityUndetectThresholdA.Size = new System.Drawing.Size(695, 60);
             this.uctbSensitivityUndetectThresholdA.SmallChange = 1;
             this.uctbSensitivityUndetectThresholdA.TabIndex = 6;
             this.uctbSensitivityUndetectThresholdA.Tag = "UPDATE_CONFIG_PACKET";
@@ -1243,7 +1253,7 @@
             this.uctbSensitivityDetectThresholdA.Maximum = 1000;
             this.uctbSensitivityDetectThresholdA.Minimum = 1;
             this.uctbSensitivityDetectThresholdA.Name = "uctbSensitivityDetectThresholdA";
-            this.uctbSensitivityDetectThresholdA.Size = new System.Drawing.Size(137, 60);
+            this.uctbSensitivityDetectThresholdA.Size = new System.Drawing.Size(695, 60);
             this.uctbSensitivityDetectThresholdA.SmallChange = 1;
             this.uctbSensitivityDetectThresholdA.TabIndex = 4;
             this.uctbSensitivityDetectThresholdA.Tag = "UPDATE_CONFIG_PACKET";
@@ -1296,7 +1306,7 @@
             this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(170, 27);
+            this.label6.Size = new System.Drawing.Size(728, 27);
             this.label6.TabIndex = 4;
             this.label6.Tag = "title";
             this.label6.Text = "sensitivity";
@@ -1973,16 +1983,56 @@
             this.label20.Text = "DCDD";
             this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panel8
+            // pnlSpeedTrap
             // 
-            this.panel8.Controls.Add(this.uctbSpeedDistance);
-            this.panel8.Controls.Add(this.lblSpeedLoopDistance);
-            this.panel8.Controls.Add(this.label24);
-            this.panel8.Location = new System.Drawing.Point(585, 361);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(177, 135);
-            this.panel8.TabIndex = 13;
-            this.panel8.Tag = "8";
+            this.pnlSpeedTrap.Controls.Add(this.label31);
+            this.pnlSpeedTrap.Controls.Add(this.tblMaximumSpeedErrors);
+            this.pnlSpeedTrap.Controls.Add(this.uctbSpeedDistance);
+            this.pnlSpeedTrap.Controls.Add(this.lblSpeedLoopDistance);
+            this.pnlSpeedTrap.Controls.Add(this.label24);
+            this.pnlSpeedTrap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlSpeedTrap.Location = new System.Drawing.Point(224, 49);
+            this.pnlSpeedTrap.Name = "pnlSpeedTrap";
+            this.pnlSpeedTrap.Size = new System.Drawing.Size(728, 639);
+            this.pnlSpeedTrap.TabIndex = 13;
+            this.pnlSpeedTrap.Tag = "8";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(6, 130);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(205, 13);
+            this.label31.TabIndex = 14;
+            this.label31.Text = "Maximum possible error at various speeds:";
+            // 
+            // tblMaximumSpeedErrors
+            // 
+            this.tblMaximumSpeedErrors.AllowUserToAddRows = false;
+            this.tblMaximumSpeedErrors.AllowUserToDeleteRows = false;
+            this.tblMaximumSpeedErrors.AllowUserToResizeColumns = false;
+            this.tblMaximumSpeedErrors.AllowUserToResizeRows = false;
+            this.tblMaximumSpeedErrors.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tblMaximumSpeedErrors.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tblMaximumSpeedErrors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tblMaximumSpeedErrors.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Speed,
+            this.WorstPossibleMeasurement,
+            this.MaximumErrorKMH,
+            this.MaximumErrorPercent});
+            this.tblMaximumSpeedErrors.Location = new System.Drawing.Point(9, 151);
+            this.tblMaximumSpeedErrors.MultiSelect = false;
+            this.tblMaximumSpeedErrors.Name = "tblMaximumSpeedErrors";
+            this.tblMaximumSpeedErrors.ReadOnly = true;
+            this.tblMaximumSpeedErrors.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.tblMaximumSpeedErrors.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tblMaximumSpeedErrors.ShowCellErrors = false;
+            this.tblMaximumSpeedErrors.ShowEditingIcon = false;
+            this.tblMaximumSpeedErrors.ShowRowErrors = false;
+            this.tblMaximumSpeedErrors.Size = new System.Drawing.Size(712, 478);
+            this.tblMaximumSpeedErrors.TabIndex = 13;
             // 
             // uctbSpeedDistance
             // 
@@ -1993,10 +2043,10 @@
             this.uctbSpeedDistance.Maximum = 1000;
             this.uctbSpeedDistance.Minimum = 1;
             this.uctbSpeedDistance.Name = "uctbSpeedDistance";
-            this.uctbSpeedDistance.Size = new System.Drawing.Size(164, 71);
+            this.uctbSpeedDistance.Size = new System.Drawing.Size(715, 71);
             this.uctbSpeedDistance.SmallChange = 1;
             this.uctbSpeedDistance.TabIndex = 11;
-            this.uctbSpeedDistance.Tag = "UPDATE_CONFIG_PACKET";
+            this.uctbSpeedDistance.Tag = "UPDATE_CONFIG_PACKET;TMR1BEST_CHANGE";
             this.uctbSpeedDistance.TickFrequency = 5;
             this.uctbSpeedDistance.Value = 1;
             this.uctbSpeedDistance.TrackbarChanged += new System.EventHandler(this.uctbSpeedDistance_TrackbarChanged);
@@ -2019,7 +2069,7 @@
             this.label24.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label24.Location = new System.Drawing.Point(0, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(177, 27);
+            this.label24.Size = new System.Drawing.Size(728, 27);
             this.label24.TabIndex = 9;
             this.label24.Tag = "title";
             this.label24.Text = "speed trap";
@@ -2042,24 +2092,23 @@
             this.saveFileDialog.FileName = "profile.xml";
             this.saveFileDialog.Filter = "DLD Profiles|*.xml";
             // 
-            // panel9
+            // pnlEventViewer
             // 
-            this.panel9.Controls.Add(this.btnSaveLog);
-            this.panel9.Controls.Add(this.btnClearLog);
-            this.panel9.Controls.Add(this.label29);
-            this.panel9.Controls.Add(this.txtLog);
-            this.panel9.Controls.Add(this.lblLastJointEvent);
-            this.panel9.Controls.Add(this.lblLastEventLoopB);
-            this.panel9.Controls.Add(this.lblLastEventLoopA);
-            this.panel9.Controls.Add(this.lblLoggingState);
-            this.panel9.Controls.Add(this.button1);
-            this.panel9.Controls.Add(this.label28);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(224, 49);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(728, 639);
-            this.panel9.TabIndex = 14;
-            this.panel9.Tag = "9";
+            this.pnlEventViewer.Controls.Add(this.btnSaveLog);
+            this.pnlEventViewer.Controls.Add(this.btnClearLog);
+            this.pnlEventViewer.Controls.Add(this.label29);
+            this.pnlEventViewer.Controls.Add(this.txtLog);
+            this.pnlEventViewer.Controls.Add(this.lblLastJointEvent);
+            this.pnlEventViewer.Controls.Add(this.lblLastEventLoopB);
+            this.pnlEventViewer.Controls.Add(this.lblLastEventLoopA);
+            this.pnlEventViewer.Controls.Add(this.lblLoggingState);
+            this.pnlEventViewer.Controls.Add(this.button1);
+            this.pnlEventViewer.Controls.Add(this.label28);
+            this.pnlEventViewer.Location = new System.Drawing.Point(224, 49);
+            this.pnlEventViewer.Name = "pnlEventViewer";
+            this.pnlEventViewer.Size = new System.Drawing.Size(656, 593);
+            this.pnlEventViewer.TabIndex = 14;
+            this.pnlEventViewer.Tag = "9";
             // 
             // btnSaveLog
             // 
@@ -2074,7 +2123,7 @@
             // btnClearLog
             // 
             this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearLog.Location = new System.Drawing.Point(630, 603);
+            this.btnClearLog.Location = new System.Drawing.Point(558, 557);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(85, 23);
             this.btnClearLog.TabIndex = 16;
@@ -2101,7 +2150,7 @@
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(707, 442);
+            this.txtLog.Size = new System.Drawing.Size(635, 396);
             this.txtLog.TabIndex = 14;
             this.txtLog.WordWrap = false;
             // 
@@ -2166,28 +2215,28 @@
             this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label28.Location = new System.Drawing.Point(0, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(728, 27);
+            this.label28.Size = new System.Drawing.Size(656, 27);
             this.label28.TabIndex = 8;
             this.label28.Tag = "title";
             this.label28.Text = "event viewer";
             this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // panel10
+            // pnlSignalAnalysis
             // 
-            this.panel10.Controls.Add(this.ckAutoSaveAnalysisLoopB);
-            this.panel10.Controls.Add(this.ckAutoSaveAnalysisLoopA);
-            this.panel10.Controls.Add(this.btnSaveAnalysisLoopB);
-            this.panel10.Controls.Add(this.btnSaveAnalysisLoopA);
-            this.panel10.Controls.Add(this.chAnalysisLoopB);
-            this.panel10.Controls.Add(this.chAnalysisLoopA);
-            this.panel10.Controls.Add(this.lblSignalAnalysis);
-            this.panel10.Controls.Add(this.btnSignalAnalysis);
-            this.panel10.Controls.Add(this.label30);
-            this.panel10.Location = new System.Drawing.Point(224, 49);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(432, 629);
-            this.panel10.TabIndex = 15;
-            this.panel10.Tag = "10";
+            this.pnlSignalAnalysis.Controls.Add(this.ckAutoSaveAnalysisLoopB);
+            this.pnlSignalAnalysis.Controls.Add(this.ckAutoSaveAnalysisLoopA);
+            this.pnlSignalAnalysis.Controls.Add(this.btnSaveAnalysisLoopB);
+            this.pnlSignalAnalysis.Controls.Add(this.btnSaveAnalysisLoopA);
+            this.pnlSignalAnalysis.Controls.Add(this.chAnalysisLoopB);
+            this.pnlSignalAnalysis.Controls.Add(this.chAnalysisLoopA);
+            this.pnlSignalAnalysis.Controls.Add(this.lblSignalAnalysis);
+            this.pnlSignalAnalysis.Controls.Add(this.btnSignalAnalysis);
+            this.pnlSignalAnalysis.Controls.Add(this.label30);
+            this.pnlSignalAnalysis.Location = new System.Drawing.Point(224, 49);
+            this.pnlSignalAnalysis.Name = "pnlSignalAnalysis";
+            this.pnlSignalAnalysis.Size = new System.Drawing.Size(432, 629);
+            this.pnlSignalAnalysis.TabIndex = 15;
+            this.pnlSignalAnalysis.Tag = "10";
             // 
             // ckAutoSaveAnalysisLoopB
             // 
@@ -2237,16 +2286,16 @@
             // 
             this.chAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea5.Name = "ChartArea1";
-            this.chAnalysisLoopB.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chAnalysisLoopB.Legends.Add(legend5);
+            chartArea17.Name = "ChartArea1";
+            this.chAnalysisLoopB.ChartAreas.Add(chartArea17);
+            legend17.Name = "Legend1";
+            this.chAnalysisLoopB.Legends.Add(legend17);
             this.chAnalysisLoopB.Location = new System.Drawing.Point(6, 352);
             this.chAnalysisLoopB.Name = "chAnalysisLoopB";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chAnalysisLoopB.Series.Add(series3);
+            series11.ChartArea = "ChartArea1";
+            series11.Legend = "Legend1";
+            series11.Name = "Series1";
+            this.chAnalysisLoopB.Series.Add(series11);
             this.chAnalysisLoopB.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopB.TabIndex = 14;
             this.chAnalysisLoopB.Text = "LOOP B";
@@ -2256,16 +2305,16 @@
             // 
             this.chAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea6.Name = "ChartArea1";
-            this.chAnalysisLoopA.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chAnalysisLoopA.Legends.Add(legend6);
+            chartArea18.Name = "ChartArea1";
+            this.chAnalysisLoopA.ChartAreas.Add(chartArea18);
+            legend18.Name = "Legend1";
+            this.chAnalysisLoopA.Legends.Add(legend18);
             this.chAnalysisLoopA.Location = new System.Drawing.Point(6, 67);
             this.chAnalysisLoopA.Name = "chAnalysisLoopA";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chAnalysisLoopA.Series.Add(series4);
+            series12.ChartArea = "ChartArea1";
+            series12.Legend = "Legend1";
+            series12.Name = "Series1";
+            this.chAnalysisLoopA.Series.Add(series12);
             this.chAnalysisLoopA.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopA.TabIndex = 13;
             this.chAnalysisLoopA.Text = "LOOP A";
@@ -2320,20 +2369,49 @@
             this.saveLogDialog.DefaultExt = "txt";
             this.saveLogDialog.Filter = "Log file|*.txt";
             // 
+            // tmrSpeedTrapErrorGenerator
+            // 
+            this.tmrSpeedTrapErrorGenerator.Interval = 350;
+            this.tmrSpeedTrapErrorGenerator.Tick += new System.EventHandler(this.tmrSpeedTrapErrorGenerator_Tick);
+            // 
+            // Speed
+            // 
+            this.Speed.HeaderText = "Speed [km/h]";
+            this.Speed.Name = "Speed";
+            this.Speed.ReadOnly = true;
+            // 
+            // WorstPossibleMeasurement
+            // 
+            this.WorstPossibleMeasurement.HeaderText = "Worst possible measurement [km/h]";
+            this.WorstPossibleMeasurement.Name = "WorstPossibleMeasurement";
+            this.WorstPossibleMeasurement.ReadOnly = true;
+            // 
+            // MaximumErrorKMH
+            // 
+            this.MaximumErrorKMH.HeaderText = "Maximum Error [km/h]";
+            this.MaximumErrorKMH.Name = "MaximumErrorKMH";
+            this.MaximumErrorKMH.ReadOnly = true;
+            // 
+            // MaximumErrorPercent
+            // 
+            this.MaximumErrorPercent.HeaderText = "Maximum error [%]";
+            this.MaximumErrorPercent.Name = "MaximumErrorPercent";
+            this.MaximumErrorPercent.ReadOnly = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 710);
-            this.Controls.Add(this.panel9);
-            this.Controls.Add(this.panel10);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.pnlSpeedTrap);
+            this.Controls.Add(this.pnlSamplingSpeed);
+            this.Controls.Add(this.pnlSensitivity);
+            this.Controls.Add(this.pnlSignalAnalysis);
+            this.Controls.Add(this.pnlEventViewer);
             this.Controls.Add(this.pnlOperatingMode);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel8);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.lbMenu);
@@ -2361,12 +2439,12 @@
             this.gbDIP2.PerformLayout();
             this.gbDIP1.ResumeLayout(false);
             this.gbDIP1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnlSamplingSpeed.ResumeLayout(false);
+            this.pnlSamplingSpeed.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartFreqVsSens)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblSensitivityExamples)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.pnlSensitivity.ResumeLayout(false);
+            this.pnlSensitivity.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -2386,12 +2464,13 @@
             this.panel6.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
-            this.panel8.ResumeLayout(false);
-            this.panel8.PerformLayout();
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
-            this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
+            this.pnlSpeedTrap.ResumeLayout(false);
+            this.pnlSpeedTrap.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tblMaximumSpeedErrors)).EndInit();
+            this.pnlEventViewer.ResumeLayout(false);
+            this.pnlEventViewer.PerformLayout();
+            this.pnlSignalAnalysis.ResumeLayout(false);
+            this.pnlSignalAnalysis.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopA)).EndInit();
             this.ResumeLayout(false);
@@ -2450,7 +2529,7 @@
         private System.Windows.Forms.ToolStripButton tsbConnectDisconnect;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlSamplingSpeed;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private ucTrackBar uctbSamplingSpeed;
@@ -2460,7 +2539,7 @@
         private System.Windows.Forms.Timer tmrSensitivitiesExampleGenerator;
         private System.Windows.Forms.DataGridViewTextBoxColumn Frequency;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sensitivity;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnlSensitivity;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cbSensitivityA;
@@ -2513,7 +2592,7 @@
         private System.Windows.Forms.Label label25;
         private ucTrackBar uctbDCDDTimer;
         private System.Windows.Forms.Label lblDCDDTimer;
-        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel pnlSpeedTrap;
         private System.Windows.Forms.Label label24;
         private ucTrackBar uctbSpeedDistance;
         private System.Windows.Forms.Label lblSpeedLoopDistance;
@@ -2555,7 +2634,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton5;
         private System.Windows.Forms.Button btnReadDIPsFromDevice;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Panel pnlEventViewer;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lblLoggingState;
@@ -2565,7 +2644,7 @@
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Button btnClearLog;
-        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel pnlSignalAnalysis;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Button btnSignalAnalysis;
         private System.Windows.Forms.Label lblSignalAnalysis;
@@ -2579,6 +2658,13 @@
         private System.Windows.Forms.SaveFileDialog saveChartImageDialog;
         private System.Windows.Forms.Button btnSaveLog;
         private System.Windows.Forms.SaveFileDialog saveLogDialog;
+        private System.Windows.Forms.DataGridView tblMaximumSpeedErrors;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Timer tmrSpeedTrapErrorGenerator;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Speed;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WorstPossibleMeasurement;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaximumErrorKMH;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaximumErrorPercent;
     }
 }
 
