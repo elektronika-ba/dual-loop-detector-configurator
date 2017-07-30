@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend16 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lbMenu = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -188,6 +188,10 @@
             this.pnlSpeedTrap = new System.Windows.Forms.Panel();
             this.label31 = new System.Windows.Forms.Label();
             this.tblMaximumSpeedErrors = new System.Windows.Forms.DataGridView();
+            this.Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WorstPossibleMeasurement = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaximumErrorKMH = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MaximumErrorPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uctbSpeedDistance = new config1v1.ucTrackBar();
             this.lblSpeedLoopDistance = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -219,10 +223,6 @@
             this.saveChartImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveLogDialog = new System.Windows.Forms.SaveFileDialog();
             this.tmrSpeedTrapErrorGenerator = new System.Windows.Forms.Timer(this.components);
-            this.Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WorstPossibleMeasurement = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaximumErrorKMH = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MaximumErrorPercent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -973,10 +973,10 @@
             this.chartFreqVsSens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea16.Name = "ChartArea1";
-            this.chartFreqVsSens.ChartAreas.Add(chartArea16);
-            legend16.Name = "Legend1";
-            this.chartFreqVsSens.Legends.Add(legend16);
+            chartArea1.Name = "ChartArea1";
+            this.chartFreqVsSens.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartFreqVsSens.Legends.Add(legend1);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
             this.chartFreqVsSens.Size = new System.Drawing.Size(426, 456);
@@ -1046,14 +1046,14 @@
             this.uctbSamplingSpeed.LargeChange = 50;
             this.uctbSamplingSpeed.Location = new System.Drawing.Point(7, 55);
             this.uctbSamplingSpeed.Maximum = 50000;
-            this.uctbSamplingSpeed.Minimum = 25500;
+            this.uctbSamplingSpeed.Minimum = 12000;
             this.uctbSamplingSpeed.Name = "uctbSamplingSpeed";
             this.uctbSamplingSpeed.Size = new System.Drawing.Size(709, 71);
             this.uctbSamplingSpeed.SmallChange = 10;
             this.uctbSamplingSpeed.TabIndex = 6;
             this.uctbSamplingSpeed.Tag = "UPDATE_CONFIG_PACKET";
             this.uctbSamplingSpeed.TickFrequency = 100;
-            this.uctbSamplingSpeed.Value = 40000;
+            this.uctbSamplingSpeed.Value = 35000;
             this.uctbSamplingSpeed.TrackbarChanged += new System.EventHandler(this.ucTrackBar1_TrackbarChanged);
             // 
             // label4
@@ -2034,6 +2034,30 @@
             this.tblMaximumSpeedErrors.Size = new System.Drawing.Size(712, 478);
             this.tblMaximumSpeedErrors.TabIndex = 13;
             // 
+            // Speed
+            // 
+            this.Speed.HeaderText = "Speed [km/h]";
+            this.Speed.Name = "Speed";
+            this.Speed.ReadOnly = true;
+            // 
+            // WorstPossibleMeasurement
+            // 
+            this.WorstPossibleMeasurement.HeaderText = "Worst possible measurement [km/h]";
+            this.WorstPossibleMeasurement.Name = "WorstPossibleMeasurement";
+            this.WorstPossibleMeasurement.ReadOnly = true;
+            // 
+            // MaximumErrorKMH
+            // 
+            this.MaximumErrorKMH.HeaderText = "Maximum Error [km/h]";
+            this.MaximumErrorKMH.Name = "MaximumErrorKMH";
+            this.MaximumErrorKMH.ReadOnly = true;
+            // 
+            // MaximumErrorPercent
+            // 
+            this.MaximumErrorPercent.HeaderText = "Maximum error [%]";
+            this.MaximumErrorPercent.Name = "MaximumErrorPercent";
+            this.MaximumErrorPercent.ReadOnly = true;
+            // 
             // uctbSpeedDistance
             // 
             this.uctbSpeedDistance.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -2286,16 +2310,16 @@
             // 
             this.chAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea17.Name = "ChartArea1";
-            this.chAnalysisLoopB.ChartAreas.Add(chartArea17);
-            legend17.Name = "Legend1";
-            this.chAnalysisLoopB.Legends.Add(legend17);
+            chartArea2.Name = "ChartArea1";
+            this.chAnalysisLoopB.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chAnalysisLoopB.Legends.Add(legend2);
             this.chAnalysisLoopB.Location = new System.Drawing.Point(6, 352);
             this.chAnalysisLoopB.Name = "chAnalysisLoopB";
-            series11.ChartArea = "ChartArea1";
-            series11.Legend = "Legend1";
-            series11.Name = "Series1";
-            this.chAnalysisLoopB.Series.Add(series11);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chAnalysisLoopB.Series.Add(series1);
             this.chAnalysisLoopB.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopB.TabIndex = 14;
             this.chAnalysisLoopB.Text = "LOOP B";
@@ -2305,16 +2329,16 @@
             // 
             this.chAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea18.Name = "ChartArea1";
-            this.chAnalysisLoopA.ChartAreas.Add(chartArea18);
-            legend18.Name = "Legend1";
-            this.chAnalysisLoopA.Legends.Add(legend18);
+            chartArea3.Name = "ChartArea1";
+            this.chAnalysisLoopA.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chAnalysisLoopA.Legends.Add(legend3);
             this.chAnalysisLoopA.Location = new System.Drawing.Point(6, 67);
             this.chAnalysisLoopA.Name = "chAnalysisLoopA";
-            series12.ChartArea = "ChartArea1";
-            series12.Legend = "Legend1";
-            series12.Name = "Series1";
-            this.chAnalysisLoopA.Series.Add(series12);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chAnalysisLoopA.Series.Add(series2);
             this.chAnalysisLoopA.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopA.TabIndex = 13;
             this.chAnalysisLoopA.Text = "LOOP A";
@@ -2373,30 +2397,6 @@
             // 
             this.tmrSpeedTrapErrorGenerator.Interval = 350;
             this.tmrSpeedTrapErrorGenerator.Tick += new System.EventHandler(this.tmrSpeedTrapErrorGenerator_Tick);
-            // 
-            // Speed
-            // 
-            this.Speed.HeaderText = "Speed [km/h]";
-            this.Speed.Name = "Speed";
-            this.Speed.ReadOnly = true;
-            // 
-            // WorstPossibleMeasurement
-            // 
-            this.WorstPossibleMeasurement.HeaderText = "Worst possible measurement [km/h]";
-            this.WorstPossibleMeasurement.Name = "WorstPossibleMeasurement";
-            this.WorstPossibleMeasurement.ReadOnly = true;
-            // 
-            // MaximumErrorKMH
-            // 
-            this.MaximumErrorKMH.HeaderText = "Maximum Error [km/h]";
-            this.MaximumErrorKMH.Name = "MaximumErrorKMH";
-            this.MaximumErrorKMH.ReadOnly = true;
-            // 
-            // MaximumErrorPercent
-            // 
-            this.MaximumErrorPercent.HeaderText = "Maximum error [%]";
-            this.MaximumErrorPercent.Name = "MaximumErrorPercent";
-            this.MaximumErrorPercent.ReadOnly = true;
             // 
             // frmMain
             // 

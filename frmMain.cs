@@ -703,7 +703,10 @@ namespace config1v1
                 }
                 r.Cells.Add(c2);
 
-                seriesChart.Points.AddXY(freq, bps);
+                if (bps > 0)
+                {
+                    seriesChart.Points.AddXY(freq, bps);
+                }
 
                 tblSensitivityExamples.Rows.Add(r);
             }
@@ -747,12 +750,12 @@ namespace config1v1
 
         private double tmr12freq(int tmr1Val, int prescVal, byte reloader)
         {
-            return (((256.0 - reloader) * prescVal * _TMR1_FREQ_KHZ) / tmr1Val);
+            return (((255.0 - reloader) * prescVal * _TMR1_FREQ_KHZ) / tmr1Val);
         }
 
         private int freq2tmr1(double freq, int prescVal, byte reloader)
         {
-            return (int)(((256.0 - reloader) * prescVal * _TMR1_FREQ_KHZ) / freq);
+            return (int)(((255.0 - reloader) * prescVal * _TMR1_FREQ_KHZ) / freq);
         }
 
         private double calcFreqResolution(double freq, int tmr1Best)
@@ -760,13 +763,13 @@ namespace config1v1
             // Djelimicno portano iz PIC-a
             // 1. prvo trazimo odgovarajuci prescaler
             byte prescaler = _TMR0_PRESCALER_MAX;
-            int prescaler_value = (int)Math.Pow(2, prescaler);
-            double tmr1_max_rp = (_TMR1_FREQ_KHZ * ((256 - _TMR0_RELOADER_MAX) * prescaler_value)) / freq;
+            int prescaler_value = (int)Math.Pow(2, prescaler) * 2;
+            double tmr1_max_rp = (_TMR1_FREQ_KHZ * ((255 - _TMR0_RELOADER_MAX) * prescaler_value)) / freq;
             while (tmr1_max_rp > tmr1Best)
             {
                 if (prescaler == 0)
                 {
-                    return -1; // previse niska frekvencija za ovaj tmr1Best
+                    return -1; // too low frequency for this tmr1Best, will not operate!
                 }
 
                 tmr1_max_rp /= 2;
@@ -774,7 +777,7 @@ namespace config1v1
                 prescaler_value /= 2;
             }
             // 2. onda trazimo reloader da bi dobili TMR1_BEST sa maloprije pronadjenim prescalerom
-            double reloader = 256 - ((1.0 / prescaler_value) * tmr1Best * freq) / _TMR1_FREQ_KHZ;
+            double reloader = 255 - ((1.0 / prescaler_value) * tmr1Best * freq) / _TMR1_FREQ_KHZ;
             // end: Portano iz PIC-a
 
             int freq2tmr1a = freq2tmr1(freq, prescaler_value, (byte)reloader);
