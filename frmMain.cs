@@ -22,6 +22,7 @@ namespace config1v1
         const char _UART_START_CHAR = (char)26;	// 26 = CTRL+Z
         const int EE_SIZE = 95; // 95 bytes, *2 in hexa
         const int FREQ_ANA_BUFFER_SIZE = 4096;
+        const int SHORTEST_SPEED_TIME_MS = 2500; // ms
 
         private List<byte> spData = new List<byte>();
         private const string commandTerminator = "END>\r\n";
@@ -57,8 +58,12 @@ namespace config1v1
             16		    Passed A->B
             17,xxx		Speed over limit with difference in km/h or mile/h in fixed 000 format
             18,xxx		Speed under or equal to limit with difference in km/h or mile/h in fixed 000 format
+            19,xxx		Entry speed in km/h or mile/h in fixed 000 format
+            20,xxx		Exit speed in km/h or mile/h in fixed 000 format
+            21,xxx		Vehicle length in centimeters in fixed 000 format
         */
-        private enum TEventCode
+
+        /*private enum TEventCode
         {
             Undetect = 1,
             Rollaway = 2,
@@ -69,7 +74,7 @@ namespace config1v1
             InitialStopDetected = 7,
             Detect = 8,
             MovementAfterPPC = 9,
-            SpeedReport = 10,
+            SpeedReportMean = 10,
             DirectionA2BCancel = 11,
             DirectionB2AGoingBack = 12,
             DirectionB2APassed = 13,
@@ -78,7 +83,10 @@ namespace config1v1
             DirectionA2BPassed = 16,
             SpeedWasOverLimit = 17,
             SpeedWasUnderOrEqualToLimit = 18,
-        }
+            SpeedReportEntry = 19,
+            SpeedReportExit = 20,
+            VehicleLengthReport = 21,
+        }*/
 
         Dictionary<int, string> EventName = new Dictionary<int, string>()
         {
@@ -91,7 +99,7 @@ namespace config1v1
             { 7, "Initial stop detected, strength: $%" },
             { 8, "Detect" },
             { 9, "Movement after PPC" },
-            { 10, "Speed report: $" },
+            { 10, "Speed report (mean): $" },
             { 11, "A->B pass cancelled" },
             { 12, "B->A going back" },
             { 13, "B->A passed" },
@@ -100,6 +108,9 @@ namespace config1v1
             { 16, "A->B passed" },
             { 17, "Overspeeding detected, excess: $" },
             { 18, "Underspeeding, with: $" },
+            { 19, "Speed report (entry): $" },
+            { 20, "Speed report (exit): $" },
+            { 21, "Vehicle length: $cm" },
         };
 
         // used during programming (sending data to device)
@@ -2205,8 +2216,8 @@ namespace config1v1
 
             double samplingSpeedSeconds = ((1.0 / _TMR1_FREQ) * uctbSamplingSpeed.Value);
 
-            int minMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (255.0 * samplingSpeedSeconds) / 1000.0 * 3600.0);
-            int maxMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (2.0 * samplingSpeedSeconds) / 1000.0 * 3600.0);
+            int minMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (SHORTEST_SPEED_TIME_MS/1000) * 3600.0);
+            int maxMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (4.0 * samplingSpeedSeconds) / 1000.0 * 3600.0);
             for (double speed = 10; speed <= maxMeasSpeed; speed += 10)
             {
                 double timeForSpeedMs = (uctbSpeedDistance.Value / 100.0) / (speed * 1000.0 / 3600.0);
@@ -2217,7 +2228,7 @@ namespace config1v1
                 c1.Value = speed;
                 r.Cells.Add(c1);
 
-                double timeForSpeedWithMaxErrSec = timeForSpeedMs + (2.0 * samplingSpeedSeconds);
+                double timeForSpeedWithMaxErrSec = timeForSpeedMs + (4.0 * samplingSpeedSeconds);
                 double speedWithMaxError = ((uctbSpeedDistance.Value / 100.0) / timeForSpeedWithMaxErrSec) / 1000.0 * 3600.0;
 
                 DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell();
