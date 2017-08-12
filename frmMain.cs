@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.IO;
 
-namespace config1v1
+namespace DLDConfig1v1
 {
     public partial class frmMain : Form
     {
@@ -551,7 +550,7 @@ namespace config1v1
             frmSettings s = new frmSettings();
 
             // popuni formu sa trneutnim podesenjima
-            string comPort = ConfigurationManager.AppSettings["comport‌​"];
+            string comPort = Properties.Settings.Default.ComPort;
             s.setFormData(comPort);
 
             DialogResult r = s.ShowDialog();
@@ -560,7 +559,8 @@ namespace config1v1
                 // snimi u settingse izmjene sa forme
                 comPort = s.getFormData();
 
-                ConfigurationManager.AppSettings["comport‌​"] = comPort;
+                Properties.Settings.Default.ComPort = comPort;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -1369,6 +1369,7 @@ namespace config1v1
             string cs = "";
             spData.Clear();
             rxState = TRXState.Running; // reset to this
+            string comport = Properties.Settings.Default.ComPort;
             try
             {
                 if (sp.IsOpen)
@@ -1380,7 +1381,7 @@ namespace config1v1
                 }
                 else
                 {
-                    sp.PortName = "COM" + ConfigurationManager.AppSettings["comport‌​"];
+                    sp.PortName = "COM" + comport;
                     sp.Open();
                     cs = "Connected to " + sp.PortName;
                     tsbConnectDisconnect.BackColor = System.Drawing.Color.LightGreen;
@@ -1389,7 +1390,7 @@ namespace config1v1
             }
             catch(Exception)
             {
-                MessageBox.Show("Error accessing COM port (COM" + ConfigurationManager.AppSettings["comport‌​"] + "). Please check settings and try again.", "Error");
+                MessageBox.Show("Error accessing COM port (COM" + comport + "). Please check settings and try again.", "Error");
                 settingsToolStripMenuItem_Click(sender, e);
                 cs = "Connection error";
             }

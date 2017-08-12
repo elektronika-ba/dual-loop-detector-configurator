@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace config1v1
+namespace DLDConfig1v1
 {
     class customSerializer
     {

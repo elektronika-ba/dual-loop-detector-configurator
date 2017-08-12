@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace config1v1
+namespace DLDConfig1v1
 {
     class CirBuff<T>
     {

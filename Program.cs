@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace config1v1
+namespace DLDConfig1v1
 {
     static class Program
     {

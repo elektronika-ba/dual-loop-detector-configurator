@@ -1,4 +1,4 @@
-﻿namespace config1v1
+﻿namespace DLDConfig1v1
 {
     partial class frmSettings
     {
