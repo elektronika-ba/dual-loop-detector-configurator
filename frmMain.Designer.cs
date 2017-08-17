@@ -304,6 +304,7 @@
             // 
             // newProfileToolStripMenuItem
             // 
+            this.newProfileToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newProfileToolStripMenuItem.Image")));
             this.newProfileToolStripMenuItem.Name = "newProfileToolStripMenuItem";
             this.newProfileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newProfileToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -312,6 +313,7 @@
             // 
             // openProfileToolStripMenuItem
             // 
+            this.openProfileToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openProfileToolStripMenuItem.Image")));
             this.openProfileToolStripMenuItem.Name = "openProfileToolStripMenuItem";
             this.openProfileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openProfileToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -320,6 +322,7 @@
             // 
             // saveProfileToolStripMenuItem
             // 
+            this.saveProfileToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveProfileToolStripMenuItem.Image")));
             this.saveProfileToolStripMenuItem.Name = "saveProfileToolStripMenuItem";
             this.saveProfileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveProfileToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -333,6 +336,7 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("settingsToolStripMenuItem.Image")));
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -346,6 +350,7 @@
             // 
             // exitToolStripMenuItem
             // 
+            this.exitToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitToolStripMenuItem.Image")));
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.exitToolStripMenuItem.Text = "Exit";
@@ -369,6 +374,7 @@
             // 
             // connectToolStripMenuItem
             // 
+            this.connectToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("connectToolStripMenuItem.Image")));
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             this.connectToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.connectToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -382,6 +388,7 @@
             // 
             // readFromDeviceToolStripMenuItem
             // 
+            this.readFromDeviceToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("readFromDeviceToolStripMenuItem.Image")));
             this.readFromDeviceToolStripMenuItem.Name = "readFromDeviceToolStripMenuItem";
             this.readFromDeviceToolStripMenuItem.ShortcutKeyDisplayString = "F2";
             this.readFromDeviceToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
@@ -391,6 +398,7 @@
             // 
             // programDeviceToolStripMenuItem
             // 
+            this.programDeviceToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("programDeviceToolStripMenuItem.Image")));
             this.programDeviceToolStripMenuItem.Name = "programDeviceToolStripMenuItem";
             this.programDeviceToolStripMenuItem.ShortcutKeyDisplayString = "F3";
             this.programDeviceToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
@@ -400,6 +408,7 @@
             // 
             // returnToRunningModeToolStripMenuItem
             // 
+            this.returnToRunningModeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("returnToRunningModeToolStripMenuItem.Image")));
             this.returnToRunningModeToolStripMenuItem.Name = "returnToRunningModeToolStripMenuItem";
             this.returnToRunningModeToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
             this.returnToRunningModeToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -413,6 +422,7 @@
             // 
             // restartCPUToolStripMenuItem
             // 
+            this.restartCPUToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("restartCPUToolStripMenuItem.Image")));
             this.restartCPUToolStripMenuItem.Name = "restartCPUToolStripMenuItem";
             this.restartCPUToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.restartCPUToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -426,6 +436,7 @@
             // 
             // factoryResetToolStripMenuItem
             // 
+            this.factoryResetToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("factoryResetToolStripMenuItem.Image")));
             this.factoryResetToolStripMenuItem.Name = "factoryResetToolStripMenuItem";
             this.factoryResetToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10;
             this.factoryResetToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
@@ -442,8 +453,9 @@
             // 
             // aboutToolStripMenuItem1
             // 
+            this.aboutToolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem1.Image")));
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem1.Text = "About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
             // 
@@ -544,11 +556,10 @@
             // tsbConnectDisconnect
             // 
             this.tsbConnectDisconnect.BackColor = System.Drawing.Color.PeachPuff;
-            this.tsbConnectDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsbConnectDisconnect.Image = ((System.Drawing.Image)(resources.GetObject("tsbConnectDisconnect.Image")));
             this.tsbConnectDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbConnectDisconnect.Name = "tsbConnectDisconnect";
-            this.tsbConnectDisconnect.Size = new System.Drawing.Size(143, 22);
+            this.tsbConnectDisconnect.Size = new System.Drawing.Size(159, 22);
             this.tsbConnectDisconnect.Text = "Connect/Disconnect (F1)";
             this.tsbConnectDisconnect.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
@@ -559,31 +570,28 @@
             // 
             // btnReadFromDevice
             // 
-            this.btnReadFromDevice.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btnReadFromDevice.Image = ((System.Drawing.Image)(resources.GetObject("btnReadFromDevice.Image")));
             this.btnReadFromDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnReadFromDevice.Name = "btnReadFromDevice";
-            this.btnReadFromDevice.Size = new System.Drawing.Size(126, 22);
+            this.btnReadFromDevice.Size = new System.Drawing.Size(142, 22);
             this.btnReadFromDevice.Text = "Read from device (F2)";
             this.btnReadFromDevice.Click += new System.EventHandler(this.readFromDeviceToolStripMenuItem_Click);
             // 
             // toolStripButton1
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(117, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(133, 22);
             this.toolStripButton1.Text = "Program device (F3)";
             this.toolStripButton1.Click += new System.EventHandler(this.programDeviceToolStripMenuItem_Click);
             // 
             // toolStripButton5
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(162, 22);
+            this.toolStripButton5.Size = new System.Drawing.Size(178, 22);
             this.toolStripButton5.Text = "Return to running mode (F4)";
             this.toolStripButton5.Click += new System.EventHandler(this.returnToRunningModeToolStripMenuItem_Click);
             // 
@@ -595,11 +603,10 @@
             // toolStripButton4
             // 
             this.toolStripButton4.BackColor = System.Drawing.Color.Moccasin;
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(96, 22);
+            this.toolStripButton4.Size = new System.Drawing.Size(112, 22);
             this.toolStripButton4.Text = "Restart CPU (F5)";
             this.toolStripButton4.Click += new System.EventHandler(this.restartCPUToolStripMenuItem_Click);
             // 
@@ -611,11 +618,10 @@
             // toolStripButton3
             // 
             this.toolStripButton3.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(107, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(123, 22);
             this.toolStripButton3.Text = "Factory reset (F10)";
             this.toolStripButton3.Click += new System.EventHandler(this.factoryResetToolStripMenuItem_Click);
             // 
