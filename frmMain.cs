@@ -2218,7 +2218,7 @@ namespace DLDConfig1v1
             double samplingSpeedSeconds = ((1.0 / _TMR1_FREQ) * uctbSamplingSpeed.Value);
 
             int minMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (SHORTEST_SPEED_TIME_MS/1000) * 3600.0);
-            int maxMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (4.0 * samplingSpeedSeconds) / 1000.0 * 3600.0);
+            int maxMeasSpeed = (int)((uctbSpeedDistance.Value / 100.0) / (2.0 * samplingSpeedSeconds) / 1000.0 * 3600.0);
             for (double speed = 10; speed <= maxMeasSpeed; speed += 10)
             {
                 double timeForSpeedMs = (uctbSpeedDistance.Value / 100.0) / (speed * 1000.0 / 3600.0);
@@ -2229,7 +2229,7 @@ namespace DLDConfig1v1
                 c1.Value = speed;
                 r.Cells.Add(c1);
 
-                double timeForSpeedWithMaxErrSec = timeForSpeedMs + (4.0 * samplingSpeedSeconds);
+                double timeForSpeedWithMaxErrSec = timeForSpeedMs + (2.0 * samplingSpeedSeconds);
                 double speedWithMaxError = ((uctbSpeedDistance.Value / 100.0) / timeForSpeedWithMaxErrSec) / 1000.0 * 3600.0;
 
                 DataGridViewTextBoxCell c2 = new DataGridViewTextBoxCell();
