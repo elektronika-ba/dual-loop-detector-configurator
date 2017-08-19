@@ -17,18 +17,24 @@ namespace DLDConfig1v1
             InitializeComponent();
         }
 
-        public void setFormData(string comPort)
+        public void setFormData(string comPort, int baudRate)
         {
             try
             {
                 udComPort.Value = int.Parse(comPort);
+                cbBaudRate.SelectedIndex = cbBaudRate.Items.IndexOf(baudRate.ToString());
             }
             catch (Exception) { }
         }
 
-        public string getFormData()
+        public string getComPort()
         {
             return udComPort.Value.ToString();
+        }
+
+        public int getBaudRate()
+        {
+            return int.Parse(cbBaudRate.Items[cbBaudRate.SelectedIndex].ToString());
         }
     }
 }

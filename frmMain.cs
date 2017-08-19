@@ -19,7 +19,7 @@ namespace DLDConfig1v1
         const int _TMR0_PRESCALER_MAX = 0b00000100;
         const int _UART_COMM_MODE_ENTER_DELAY_MS = 3000; // 3 seconds max wait for entering into comm uart mode
         const char _UART_START_CHAR = (char)26;	// 26 = CTRL+Z
-        const int EE_SIZE = 95; // 95 bytes, *2 in hexa
+        const int EE_SIZE = 96; // 96 bytes, *2 in hexa
         const int FREQ_ANA_BUFFER_SIZE = 4096;
         const int SHORTEST_SPEED_TIME_MS = 2500; // ms
 
@@ -188,6 +188,7 @@ namespace DLDConfig1v1
                 this.tmr1Best = 40000;
                 this.useSoftDIPs = 0x00;
                 this.validVal = 0xAA;
+                this.baudRate = 0;
             }
 
             public class TFiltering
@@ -252,6 +253,7 @@ namespace DLDConfig1v1
             public ushort tmr1Best { get; set; }
             public ushort speedDistanceCm { get; set; }
             public byte detectStopSlowCheckerTmr { get; set; }
+            public byte baudRate { get; set; }
         }
 
         private TConfigPacket configPacket = new TConfigPacket(true);
@@ -341,6 +343,9 @@ namespace DLDConfig1v1
 
             // speed trap
             configPacket.speedDistanceCm = (ushort)uctbSpeedDistance.Value;
+
+            // baudrate
+            configPacket.baudRate = (byte)cbBaudRate.SelectedIndex;
         }
 
         /**
@@ -443,6 +448,16 @@ namespace DLDConfig1v1
             uctbSpeedDistance.Value = configPacket.speedDistanceCm;
             uctbSpeedDistance.TriggerChange(null, null);
 
+            // baud rate
+            try
+            {
+                cbBaudRate.SelectedIndex = configPacket.baudRate;
+            }
+            catch(Exception)
+            {
+                cbBaudRate.SelectedIndex = 0;
+            }
+
             // trigger change event on sampling speed, so that everything that depends on it gets updated
             uctbSamplingSpeed.TriggerChange(null, null);
         }
@@ -542,15 +557,18 @@ namespace DLDConfig1v1
 
             // popuni formu sa trneutnim podesenjima
             string comPort = Properties.Settings.Default.ComPort;
-            s.setFormData(comPort);
+            int baudRate = Properties.Settings.Default.BaudRate;
+            s.setFormData(comPort, baudRate);
 
             DialogResult r = s.ShowDialog();
             if (r == DialogResult.OK)
             {
                 // snimi u settingse izmjene sa forme
-                comPort = s.getFormData();
+                comPort = s.getComPort();
+                baudRate = s.getBaudRate();
 
                 Properties.Settings.Default.ComPort = comPort;
+                Properties.Settings.Default.BaudRate = baudRate;
                 Properties.Settings.Default.Save();
             }
         }
@@ -1220,6 +1238,11 @@ namespace DLDConfig1v1
                 hex = hexaConfigPacket.Substring(index, 2);
                 index += hex.Length;
                 parsedConfigPacket.detectStopSlowCheckerTmr = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+
+                // baud rate
+                hex = hexaConfigPacket.Substring(index, 2);
+                index += hex.Length;
+                parsedConfigPacket.baudRate = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber);
             }
             catch (Exception)
             {
@@ -1235,7 +1258,7 @@ namespace DLDConfig1v1
             // send GET command
             if(!sendDataToDevice("G"))
             {
-                MessageBox.Show("Failed to send command G to device. Please try again.", "Error");
+                MessageBox.Show("Failed to send command G to device. Please make sure baud rate setting is correct and try again.", "Error");
             }
 
             // handling of reception of data is in receiver parser
@@ -1331,6 +1354,9 @@ namespace DLDConfig1v1
             // detect stop, drugi dio
             hex += configPacket.detectStopSlowCheckerTmr.ToString("X2");
 
+            // baudrate
+            hex += configPacket.baudRate.ToString("X2");
+
             return hex;
         }
 
@@ -1339,19 +1365,29 @@ namespace DLDConfig1v1
             // spakuj configPacket u hexadecimalni string pa da ga posaljemo na uredjaj
             hex2send = encodeHexaConfigPacket(configPacket);
 
-            sendDataToDevice("S"); // this will initiate the programming procedure
+            if(!sendDataToDevice("S")); // this will initiate the programming procedure
+            {
+                MessageBox.Show("Failed to send command S to device. Please make sure baud rate setting is correct and try again.", "Error");
+            }
+
         }
 
         private void restartCPUToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            sendDataToDevice("Y");
+            if(!sendDataToDevice("Y"))
+            {
+                MessageBox.Show("Failed to send command Y to device. Please make sure baud rate setting is correct and try again.", "Error");
+            }
         }
 
         private void factoryResetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to perform factory reset?", "Factory reset", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                sendDataToDevice("W");
+                if(!sendDataToDevice("W"))
+                {
+                    MessageBox.Show("Failed to send command W to device. Please make sure baud rate setting is correct and try again.", "Error");
+                }
             }
         }
 
@@ -1373,8 +1409,9 @@ namespace DLDConfig1v1
                 else
                 {
                     sp.PortName = "COM" + comport;
+                    sp.BaudRate = Properties.Settings.Default.BaudRate;
                     sp.Open();
-                    cs = "Connected to " + sp.PortName;
+                    cs = "Connected to " + sp.PortName + " @ " + sp.BaudRate + "bps";
                     tsbConnectDisconnect.BackColor = System.Drawing.Color.LightGreen;
                     tssConnectionStatus.BackColor = System.Drawing.Color.LightGreen;
                 }
@@ -1578,7 +1615,7 @@ namespace DLDConfig1v1
                                 freqAna.SetIndex(backupIndex);
                             }
                         }
-                        catch (Exception oh)
+                        catch (Exception)
                         {
                             // parsing error happens because of uart->usb interface buffer overrun, so just die silently
                             //Console.WriteLine("EXCEPTION PARSING");
@@ -2022,12 +2059,18 @@ namespace DLDConfig1v1
 
         private void tssFrequencyLoopA_Click(object sender, EventArgs e)
         {
-            sendDataToDevice("F");
+            if(!sendDataToDevice("F"))
+            {
+                MessageBox.Show("Failed to send command F to device. Please make sure baud rate setting is correct and try again.", "Error");
+            }
         }
 
         private void tssFrequencyLoopB_Click(object sender, EventArgs e)
         {
-            sendDataToDevice("F");
+            if(!sendDataToDevice("F"))
+            {
+                MessageBox.Show("Failed to send command F to device. Please make sure baud rate setting is correct and try again.", "Error");
+            }
         }
 
         private void uctbPPCMedium_TrackbarChanged(object sender, EventArgs e)
@@ -2061,7 +2104,10 @@ namespace DLDConfig1v1
 
         private void btnReadDIPsFromDevice_Click(object sender, EventArgs e)
         {
-            sendDataToDevice("T");
+            if(!sendDataToDevice("T"))
+            {
+                MessageBox.Show("Failed to send command T to device. Please make sure baud rate setting is correct and try again.", "Error");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

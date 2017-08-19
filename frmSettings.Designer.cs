@@ -32,13 +32,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.udComPort = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbBaudRate = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.udComPort)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 44);
+            this.label1.Location = new System.Drawing.Point(34, 44);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(34, 13);
             this.label1.TabIndex = 0;
@@ -60,7 +62,7 @@
             // btnOk
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(90, 84);
+            this.btnOk.Location = new System.Drawing.Point(88, 115);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 4;
@@ -69,9 +71,9 @@
             // 
             // udComPort
             // 
-            this.udComPort.Location = new System.Drawing.Point(52, 42);
+            this.udComPort.Location = new System.Drawing.Point(74, 42);
             this.udComPort.Name = "udComPort";
-            this.udComPort.Size = new System.Drawing.Size(192, 20);
+            this.udComPort.Size = new System.Drawing.Size(170, 20);
             this.udComPort.TabIndex = 6;
             this.udComPort.Value = new decimal(new int[] {
             6,
@@ -79,11 +81,36 @@
             0,
             0});
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 71);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Baud rate:";
+            // 
+            // cbBaudRate
+            // 
+            this.cbBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBaudRate.FormattingEnabled = true;
+            this.cbBaudRate.Items.AddRange(new object[] {
+            "115200",
+            "57600",
+            "19200",
+            "9600"});
+            this.cbBaudRate.Location = new System.Drawing.Point(75, 68);
+            this.cbBaudRate.Name = "cbBaudRate";
+            this.cbBaudRate.Size = new System.Drawing.Size(169, 21);
+            this.cbBaudRate.TabIndex = 8;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(256, 119);
+            this.ClientSize = new System.Drawing.Size(256, 150);
+            this.Controls.Add(this.cbBaudRate);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.udComPort);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.label2);
@@ -107,5 +134,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.NumericUpDown udComPort;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbBaudRate;
     }
 }
