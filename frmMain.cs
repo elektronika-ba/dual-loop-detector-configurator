@@ -1365,7 +1365,7 @@ namespace DLDConfig1v1
             // spakuj configPacket u hexadecimalni string pa da ga posaljemo na uredjaj
             hex2send = encodeHexaConfigPacket(configPacket);
 
-            if(!sendDataToDevice("S")); // this will initiate the programming procedure
+            if(!sendDataToDevice("S")) // this will initiate the programming procedure
             {
                 MessageBox.Show("Failed to send command S to device. Please make sure baud rate setting is correct and try again.", "Error");
             }
