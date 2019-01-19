@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lbMenu = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +81,10 @@
             this.sp = new System.IO.Ports.SerialPort(this.components);
             this.tmrTime = new System.Windows.Forms.Timer(this.components);
             this.pnlOperatingMode = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.cbBaudRate = new System.Windows.Forms.ComboBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.btnReadDIPsFromDevice = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
@@ -223,14 +227,11 @@
             this.saveChartImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveLogDialog = new System.Windows.Forms.SaveFileDialog();
             this.tmrSpeedTrapErrorGenerator = new System.Windows.Forms.Timer(this.components);
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.cbBaudRate = new System.Windows.Forms.ComboBox();
-            this.label33 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlOperatingMode.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.gbDIP2.SuspendLayout();
             this.gbDIP1.SuspendLayout();
@@ -254,7 +255,6 @@
             this.pnlSignalAnalysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopA)).BeginInit();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbMenu
@@ -655,13 +655,60 @@
             this.pnlOperatingMode.Controls.Add(this.label2);
             this.pnlOperatingMode.Controls.Add(this.label1);
             this.pnlOperatingMode.Controls.Add(this.cbOperatingMode);
-            this.pnlOperatingMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlOperatingMode.Location = new System.Drawing.Point(224, 49);
             this.pnlOperatingMode.Name = "pnlOperatingMode";
             this.pnlOperatingMode.Size = new System.Drawing.Size(728, 639);
             this.pnlOperatingMode.TabIndex = 5;
             this.pnlOperatingMode.Tag = "0";
             this.pnlOperatingMode.Visible = false;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.label33);
+            this.groupBox6.Controls.Add(this.cbBaudRate);
+            this.groupBox6.Controls.Add(this.label32);
+            this.groupBox6.Location = new System.Drawing.Point(9, 552);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(707, 74);
+            this.groupBox6.TabIndex = 11;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "UART speed";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(6, 51);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(655, 13);
+            this.label33.TabIndex = 13;
+            this.label33.Text = "After changing UART port speed in device and resetting it, do not forget to open " +
+    "File -> Connection settings, and set the same port speed.";
+            // 
+            // cbBaudRate
+            // 
+            this.cbBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbBaudRate.FormattingEnabled = true;
+            this.cbBaudRate.Items.AddRange(new object[] {
+            "115200",
+            "57600",
+            "19200",
+            "9600"});
+            this.cbBaudRate.Location = new System.Drawing.Point(149, 22);
+            this.cbBaudRate.Name = "cbBaudRate";
+            this.cbBaudRate.Size = new System.Drawing.Size(121, 21);
+            this.cbBaudRate.TabIndex = 12;
+            this.cbBaudRate.Tag = "UPDATE_CONFIG_PACKET";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 25);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(137, 13);
+            this.label32.TabIndex = 11;
+            this.label32.Text = "Device\'s UART port speed:";
             // 
             // btnReadDIPsFromDevice
             // 
@@ -986,10 +1033,10 @@
             this.chartFreqVsSens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea10.Name = "ChartArea1";
-            this.chartFreqVsSens.ChartAreas.Add(chartArea10);
-            legend10.Name = "Legend1";
-            this.chartFreqVsSens.Legends.Add(legend10);
+            chartArea1.Name = "ChartArea1";
+            this.chartFreqVsSens.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartFreqVsSens.Legends.Add(legend1);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
             this.chartFreqVsSens.Size = new System.Drawing.Size(426, 456);
@@ -2141,14 +2188,16 @@
             this.pnlEventViewer.Controls.Add(this.lblLoggingState);
             this.pnlEventViewer.Controls.Add(this.button1);
             this.pnlEventViewer.Controls.Add(this.label28);
+            this.pnlEventViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlEventViewer.Location = new System.Drawing.Point(224, 49);
             this.pnlEventViewer.Name = "pnlEventViewer";
-            this.pnlEventViewer.Size = new System.Drawing.Size(656, 593);
+            this.pnlEventViewer.Size = new System.Drawing.Size(728, 639);
             this.pnlEventViewer.TabIndex = 14;
             this.pnlEventViewer.Tag = "9";
             // 
             // btnSaveLog
             // 
+            this.btnSaveLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveLog.Location = new System.Drawing.Point(539, 603);
             this.btnSaveLog.Name = "btnSaveLog";
             this.btnSaveLog.Size = new System.Drawing.Size(85, 23);
@@ -2160,7 +2209,7 @@
             // btnClearLog
             // 
             this.btnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearLog.Location = new System.Drawing.Point(558, 557);
+            this.btnClearLog.Location = new System.Drawing.Point(630, 603);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(85, 23);
             this.btnClearLog.TabIndex = 16;
@@ -2187,7 +2236,7 @@
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(635, 396);
+            this.txtLog.Size = new System.Drawing.Size(707, 442);
             this.txtLog.TabIndex = 14;
             this.txtLog.WordWrap = false;
             // 
@@ -2252,7 +2301,7 @@
             this.label28.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label28.Location = new System.Drawing.Point(0, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(656, 27);
+            this.label28.Size = new System.Drawing.Size(728, 27);
             this.label28.TabIndex = 8;
             this.label28.Tag = "title";
             this.label28.Text = "event viewer";
@@ -2323,16 +2372,16 @@
             // 
             this.chAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea11.Name = "ChartArea1";
-            this.chAnalysisLoopB.ChartAreas.Add(chartArea11);
-            legend11.Name = "Legend1";
-            this.chAnalysisLoopB.Legends.Add(legend11);
+            chartArea2.Name = "ChartArea1";
+            this.chAnalysisLoopB.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chAnalysisLoopB.Legends.Add(legend2);
             this.chAnalysisLoopB.Location = new System.Drawing.Point(6, 352);
             this.chAnalysisLoopB.Name = "chAnalysisLoopB";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chAnalysisLoopB.Series.Add(series7);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chAnalysisLoopB.Series.Add(series1);
             this.chAnalysisLoopB.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopB.TabIndex = 14;
             this.chAnalysisLoopB.Text = "LOOP B";
@@ -2342,16 +2391,16 @@
             // 
             this.chAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea12.Name = "ChartArea1";
-            this.chAnalysisLoopA.ChartAreas.Add(chartArea12);
-            legend12.Name = "Legend1";
-            this.chAnalysisLoopA.Legends.Add(legend12);
+            chartArea3.Name = "ChartArea1";
+            this.chAnalysisLoopA.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chAnalysisLoopA.Legends.Add(legend3);
             this.chAnalysisLoopA.Location = new System.Drawing.Point(6, 67);
             this.chAnalysisLoopA.Name = "chAnalysisLoopA";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chAnalysisLoopA.Series.Add(series8);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chAnalysisLoopA.Series.Add(series2);
             this.chAnalysisLoopA.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopA.TabIndex = 13;
             this.chAnalysisLoopA.Text = "LOOP A";
@@ -2411,65 +2460,17 @@
             this.tmrSpeedTrapErrorGenerator.Interval = 350;
             this.tmrSpeedTrapErrorGenerator.Tick += new System.EventHandler(this.tmrSpeedTrapErrorGenerator_Tick);
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox6.Controls.Add(this.label33);
-            this.groupBox6.Controls.Add(this.cbBaudRate);
-            this.groupBox6.Controls.Add(this.label32);
-            this.groupBox6.Location = new System.Drawing.Point(9, 552);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(707, 74);
-            this.groupBox6.TabIndex = 11;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "UART speed";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(6, 25);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(137, 13);
-            this.label32.TabIndex = 11;
-            this.label32.Text = "Device\'s UART port speed:";
-            // 
-            // cbBaudRate
-            // 
-            this.cbBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBaudRate.FormattingEnabled = true;
-            this.cbBaudRate.Items.AddRange(new object[] {
-            "115200",
-            "57600",
-            "19200",
-            "9600"});
-            this.cbBaudRate.Location = new System.Drawing.Point(149, 22);
-            this.cbBaudRate.Name = "cbBaudRate";
-            this.cbBaudRate.Size = new System.Drawing.Size(121, 21);
-            this.cbBaudRate.TabIndex = 12;
-            this.cbBaudRate.Tag = "UPDATE_CONFIG_PACKET";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(6, 51);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(655, 13);
-            this.label33.TabIndex = 13;
-            this.label33.Text = "After changing UART port speed in device and resetting it, do not forget to open " +
-    "File -> Connection settings, and set the same port speed.";
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 710);
+            this.Controls.Add(this.pnlEventViewer);
             this.Controls.Add(this.pnlOperatingMode);
             this.Controls.Add(this.pnlSpeedTrap);
             this.Controls.Add(this.pnlSamplingSpeed);
             this.Controls.Add(this.pnlSensitivity);
             this.Controls.Add(this.pnlSignalAnalysis);
-            this.Controls.Add(this.pnlEventViewer);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
@@ -2495,6 +2496,8 @@
             this.toolStrip1.PerformLayout();
             this.pnlOperatingMode.ResumeLayout(false);
             this.pnlOperatingMode.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.gbDIP2.ResumeLayout(false);
             this.gbDIP2.PerformLayout();
@@ -2534,8 +2537,6 @@
             this.pnlSignalAnalysis.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chAnalysisLoopA)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
