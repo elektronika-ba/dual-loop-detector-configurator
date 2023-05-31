@@ -30,14 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lbMenu = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,6 +81,11 @@
             this.sp = new System.IO.Ports.SerialPort(this.components);
             this.tmrTime = new System.Windows.Forms.Timer(this.components);
             this.pnlOperatingMode = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label33 = new System.Windows.Forms.Label();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
@@ -89,7 +94,6 @@
             this.label27 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.ckUseSoftDIPs = new System.Windows.Forms.CheckBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbDIP2 = new System.Windows.Forms.GroupBox();
             this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
@@ -231,8 +235,12 @@
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlOperatingMode.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.gbDIP2.SuspendLayout();
             this.gbDIP1.SuspendLayout();
             this.pnlSamplingSpeed.SuspendLayout();
@@ -644,12 +652,12 @@
             // 
             // pnlOperatingMode
             // 
+            this.pnlOperatingMode.Controls.Add(this.tabControl1);
             this.pnlOperatingMode.Controls.Add(this.groupBox6);
             this.pnlOperatingMode.Controls.Add(this.btnReadDIPsFromDevice);
             this.pnlOperatingMode.Controls.Add(this.label27);
             this.pnlOperatingMode.Controls.Add(this.label26);
             this.pnlOperatingMode.Controls.Add(this.ckUseSoftDIPs);
-            this.pnlOperatingMode.Controls.Add(this.pictureBox1);
             this.pnlOperatingMode.Controls.Add(this.gbDIP2);
             this.pnlOperatingMode.Controls.Add(this.gbDIP1);
             this.pnlOperatingMode.Controls.Add(this.label2);
@@ -660,7 +668,60 @@
             this.pnlOperatingMode.Size = new System.Drawing.Size(728, 639);
             this.pnlOperatingMode.TabIndex = 5;
             this.pnlOperatingMode.Tag = "0";
-            this.pnlOperatingMode.Visible = false;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(10, 308);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(201, 238);
+            this.tabControl1.TabIndex = 12;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(193, 212);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "v1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(187, 206);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.pictureBox2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(193, 212);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "v2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(187, 206);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 6;
+            this.pictureBox2.TabStop = false;
             // 
             // groupBox6
             // 
@@ -712,7 +773,7 @@
             // 
             // btnReadDIPsFromDevice
             // 
-            this.btnReadDIPsFromDevice.Location = new System.Drawing.Point(218, 369);
+            this.btnReadDIPsFromDevice.Location = new System.Drawing.Point(218, 367);
             this.btnReadDIPsFromDevice.Name = "btnReadDIPsFromDevice";
             this.btnReadDIPsFromDevice.Size = new System.Drawing.Size(105, 23);
             this.btnReadDIPsFromDevice.TabIndex = 9;
@@ -723,7 +784,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(217, 344);
+            this.label27.Location = new System.Drawing.Point(217, 342);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(422, 13);
             this.label27.TabIndex = 8;
@@ -733,7 +794,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(217, 308);
+            this.label26.Location = new System.Drawing.Point(217, 306);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(461, 26);
             this.label26.TabIndex = 7;
@@ -751,16 +812,6 @@
             this.ckUseSoftDIPs.Tag = "UPDATE_CONFIG_PACKET";
             this.ckUseSoftDIPs.Text = "Use software DIPs (ignore DIP settings on device)";
             this.ckUseSoftDIPs.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(9, 309);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(199, 227);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
             // 
             // gbDIP2
             // 
@@ -1033,10 +1084,10 @@
             this.chartFreqVsSens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chartFreqVsSens.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartFreqVsSens.Legends.Add(legend1);
+            chartArea10.Name = "ChartArea1";
+            this.chartFreqVsSens.ChartAreas.Add(chartArea10);
+            legend10.Name = "Legend1";
+            this.chartFreqVsSens.Legends.Add(legend10);
             this.chartFreqVsSens.Location = new System.Drawing.Point(290, 173);
             this.chartFreqVsSens.Name = "chartFreqVsSens";
             this.chartFreqVsSens.Size = new System.Drawing.Size(426, 456);
@@ -2372,16 +2423,16 @@
             // 
             this.chAnalysisLoopB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.chAnalysisLoopB.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chAnalysisLoopB.Legends.Add(legend2);
+            chartArea11.Name = "ChartArea1";
+            this.chAnalysisLoopB.ChartAreas.Add(chartArea11);
+            legend11.Name = "Legend1";
+            this.chAnalysisLoopB.Legends.Add(legend11);
             this.chAnalysisLoopB.Location = new System.Drawing.Point(6, 352);
             this.chAnalysisLoopB.Name = "chAnalysisLoopB";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chAnalysisLoopB.Series.Add(series1);
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chAnalysisLoopB.Series.Add(series7);
             this.chAnalysisLoopB.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopB.TabIndex = 14;
             this.chAnalysisLoopB.Text = "LOOP B";
@@ -2391,16 +2442,16 @@
             // 
             this.chAnalysisLoopA.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea3.Name = "ChartArea1";
-            this.chAnalysisLoopA.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chAnalysisLoopA.Legends.Add(legend3);
+            chartArea12.Name = "ChartArea1";
+            this.chAnalysisLoopA.ChartAreas.Add(chartArea12);
+            legend12.Name = "Legend1";
+            this.chAnalysisLoopA.Legends.Add(legend12);
             this.chAnalysisLoopA.Location = new System.Drawing.Point(6, 67);
             this.chAnalysisLoopA.Name = "chAnalysisLoopA";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chAnalysisLoopA.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chAnalysisLoopA.Series.Add(series8);
             this.chAnalysisLoopA.Size = new System.Drawing.Size(414, 241);
             this.chAnalysisLoopA.TabIndex = 13;
             this.chAnalysisLoopA.Text = "LOOP A";
@@ -2465,8 +2516,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 710);
-            this.Controls.Add(this.pnlEventViewer);
             this.Controls.Add(this.pnlOperatingMode);
+            this.Controls.Add(this.pnlEventViewer);
             this.Controls.Add(this.pnlSpeedTrap);
             this.Controls.Add(this.pnlSamplingSpeed);
             this.Controls.Add(this.pnlSensitivity);
@@ -2496,9 +2547,13 @@
             this.toolStrip1.PerformLayout();
             this.pnlOperatingMode.ResumeLayout(false);
             this.pnlOperatingMode.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.gbDIP2.ResumeLayout(false);
             this.gbDIP2.PerformLayout();
             this.gbDIP1.ResumeLayout(false);
@@ -2733,6 +2788,10 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.ComboBox cbBaudRate;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

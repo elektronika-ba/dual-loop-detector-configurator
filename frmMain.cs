@@ -57,6 +57,7 @@ namespace DLDConfig1v1
             16		    Passed A->B
             17,xxx		Speed over limit with difference in km/h or mile/h in fixed 000 format
             18,xxx		Speed under or equal to limit with difference in km/h or mile/h in fixed 000 format
+            19,x        Axle count
         */
 
         /*private enum TEventCode
@@ -79,6 +80,7 @@ namespace DLDConfig1v1
             DirectionA2BPassed = 16,
             SpeedWasOverLimit = 17,
             SpeedWasUnderOrEqualToLimit = 18,
+            AxleCount = 19,
         }*/
 
         Dictionary<int, string> EventName = new Dictionary<int, string>()
@@ -101,6 +103,7 @@ namespace DLDConfig1v1
             { 16, "A->B passed" },
             { 17, "Overspeeding detected, excess: $" },
             { 18, "Underspeeding, with: $" },
+            { 19, "Axle count: $" },
         };
 
         // used during programming (sending data to device)
